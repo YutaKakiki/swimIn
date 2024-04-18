@@ -1,7 +1,17 @@
+'use client'
+import { Box } from '@mui/material'
 import React from 'react'
 
-const page = () => {
-  return <div>page</div>
+const Page = () => {
+  return (
+    <>
+      <Box>
+        <Box>
+          <div>page</div>
+        </Box>
+      </Box>
+    </>
+  )
 }
 
-export default page
+export default Page

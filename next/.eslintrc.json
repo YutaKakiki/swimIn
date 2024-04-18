@@ -11,6 +11,7 @@
     "plugin:import/typescript"
   ],
   "rules": {
+    "react-hooks/exhaustive-deps": "off",
     "react/react-in-jsx-scope": "off",
     "import/order": [2, { "alphabetize": { "order": "asc" } }],
     "import/no-unresolved": "off",
