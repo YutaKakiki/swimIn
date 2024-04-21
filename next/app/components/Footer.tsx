@@ -35,7 +35,7 @@ const Footer = () => {
                 </Link>
               </Box>
               <Box>
-                <Link href="#">
+                <Link href="/friends">
                   <IconButton>
                     <GroupsIcon sx={{ fontSize: '45px', color: '#4d4d4d' }} />
                   </IconButton>

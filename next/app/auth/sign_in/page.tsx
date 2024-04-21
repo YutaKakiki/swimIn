@@ -1,4 +1,5 @@
 'use client'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Box, Stack, TextField, Typography } from '@mui/material'
 import axios from 'axios'
@@ -6,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useSnackbarState, useUserState } from '@/app/hooks/useGrobalState'
-
+import { signInSchema } from '@/app/util/yupRules'
 type SignInFormDataType = {
   email: string
   password: string
@@ -15,11 +16,16 @@ type SignInFormDataType = {
 const SignIn = () => {
   const [user, setUser] = useUserState()
   const [isLoading, setIsLoading] = useState(false)
-  const { handleSubmit, control } = useForm<SignInFormDataType>({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<SignInFormDataType>({
     defaultValues: {
       email: '',
       password: '',
     },
+    resolver: yupResolver(signInSchema),
   })
   const router = useRouter()
   const [, setSnackbar] = useSnackbarState()
@@ -45,8 +51,7 @@ const SignIn = () => {
         })
         router.push('/')
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         setSnackbar({
           message: 'ログインに失敗しました',
           severity: 'error',
@@ -72,13 +77,13 @@ const SignIn = () => {
           name="email"
           control={control}
           defaultValue=""
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <TextField
               {...field}
               label="Email"
               type="email"
-              error={fieldState.invalid}
-              helperText={fieldState.error?.message}
+              error={'email' in errors}
+              helperText={errors.email?.message}
               InputLabelProps={{ shrink: true }}
             />
           )}
@@ -87,13 +92,13 @@ const SignIn = () => {
           name="password"
           control={control}
           defaultValue=""
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <TextField
               {...field}
               type="password"
               label="パスワード"
-              error={fieldState.invalid}
-              helperText={fieldState.error?.message}
+              error={'password' in errors}
+              helperText={errors.password?.message}
               InputLabelProps={{ shrink: true }}
             />
           )}

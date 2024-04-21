@@ -20,7 +20,7 @@ export default function RootLayout({
         <body>
           <Header />
           <PutSnackbar />
-          <Box sx={{ mt: '120px' }}>{children}</Box>
+          <Box sx={{ mt: '120px', pb: '100px' }}>{children}</Box>
           <CurrentUser />
           <Footer />
         </body>

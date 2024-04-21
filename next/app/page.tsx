@@ -2,16 +2,16 @@
 import { Box } from '@mui/material'
 import React from 'react'
 
-const Page = () => {
+const Home = () => {
   return (
     <>
       <Box>
         <Box>
-          <div>page</div>
+          <div>Home</div>
         </Box>
       </Box>
     </>
   )
 }
 
-export default Page
+export default Home

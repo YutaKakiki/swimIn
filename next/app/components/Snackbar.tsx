@@ -7,7 +7,6 @@ import { useSnackbarState } from '../hooks/useGrobalState'
 const PutSnackbar = () => {
   const [snackbar, setSnackbar] = useSnackbarState()
   const [open, setOpen] = useState<boolean>(false)
-  console.log(open)
   const pathname = usePathname()
 
   useEffect(() => {

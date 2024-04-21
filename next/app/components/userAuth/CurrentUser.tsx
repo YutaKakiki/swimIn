@@ -1,6 +1,8 @@
 'use client'
 import axios from 'axios'
+
 import { useEffect } from 'react'
+
 import { useUserState } from '@/app/hooks/useGrobalState'
 
 const CurrentUser = () => {

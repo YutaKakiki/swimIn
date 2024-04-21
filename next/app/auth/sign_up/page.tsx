@@ -1,4 +1,5 @@
 'use client'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Box, Stack, TextField, Typography } from '@mui/material'
 import axios from 'axios'
@@ -6,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useSnackbarState } from '@/app/hooks/useGrobalState'
+import { signUpSchema } from '@/app/util/yupRules'
 
 type SignUpFormDataType = {
   name: string
@@ -15,13 +17,18 @@ type SignUpFormDataType = {
 }
 
 const SignUp = () => {
-  const { handleSubmit, control } = useForm<SignUpFormDataType>({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<SignUpFormDataType>({
     defaultValues: {
       name: '',
       email: '',
       password: '',
       password_confirmation: '',
     },
+    resolver: yupResolver(signUpSchema),
   })
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
@@ -50,8 +57,7 @@ const SignUp = () => {
         })
         router.push('/')
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         setSnackbar({
           message: '新規登録に失敗しました',
           severity: 'error',
@@ -77,13 +83,13 @@ const SignUp = () => {
           name="name"
           control={control}
           defaultValue=""
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <TextField
               {...field}
               type="text"
               label="名前"
-              error={fieldState.invalid}
-              helperText={fieldState.error?.message}
+              error={'name' in errors}
+              helperText={errors.name?.message}
               InputLabelProps={{ shrink: true }}
             />
           )}
@@ -92,13 +98,13 @@ const SignUp = () => {
           name="email"
           control={control}
           defaultValue=""
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <TextField
               {...field}
               label="Email"
               type="email"
-              error={fieldState.invalid}
-              helperText={fieldState.error?.message}
+              error={'email' in errors}
+              helperText={errors.email?.message}
               InputLabelProps={{ shrink: true }}
             />
           )}
@@ -107,13 +113,13 @@ const SignUp = () => {
           name="password"
           control={control}
           defaultValue=""
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <TextField
               {...field}
               type="password"
               label="パスワード"
-              error={fieldState.invalid}
-              helperText={fieldState.error?.message}
+              error={'password' in errors}
+              helperText={errors.password?.message}
               InputLabelProps={{ shrink: true }}
             />
           )}
@@ -122,13 +128,13 @@ const SignUp = () => {
           name="password_confirmation"
           control={control}
           defaultValue=""
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <TextField
               {...field}
               type="password"
-              label="パスワード確認"
-              error={fieldState.invalid}
-              helperText={fieldState.error?.message}
+              label="パスワード(確認用)"
+              error={'password_confirmation' in errors}
+              helperText={errors.password_confirmation?.message}
               InputLabelProps={{ shrink: true }}
             />
           )}

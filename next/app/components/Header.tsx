@@ -21,7 +21,6 @@ export const Header = () => {
     setOpen(false)
   }
   const handleOpen = () => {
-    console.log('peropero')
     setOpen(true)
   }
   useEffect(() => {

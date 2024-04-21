@@ -23,8 +23,7 @@ const Confirmation = () => {
         })
         router.push('/auth/sign_in')
       })
-      .catch((err) => {
-        console.log(err.message)
+      .catch(() => {
         setSnackbar({
           message: '認証に失敗しました',
           severity: 'error',
