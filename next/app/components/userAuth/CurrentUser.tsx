@@ -7,6 +7,7 @@ import { useUserState } from '@/app/hooks/useGrobalState'
 
 const CurrentUser = () => {
   const [user, setUser] = useUserState()
+  console.log(user)
   useEffect(() => {
     if (user.isFetched && user.isSignIn) {
       return

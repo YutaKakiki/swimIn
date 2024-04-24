@@ -1,4 +1,4 @@
-import PersonIcon from '@mui/icons-material/Person'
+// import PersonIcon from '@mui/icons-material/Person'
 import {
   Avatar,
   Box,
@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material'
 import React from 'react'
+import { OtherUserProfileImage } from './OtherUserProfileImage'
 
 type PropsTypes = {
   user: {
@@ -23,7 +24,7 @@ const CurrentFollowingUsers: React.FC<PropsTypes> = ({ user }) => {
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar>
-            <PersonIcon />
+            <OtherUserProfileImage height={40} width={40} otherUser={user} />
           </Avatar>
         </ListItemAvatar>
         <ListItemText

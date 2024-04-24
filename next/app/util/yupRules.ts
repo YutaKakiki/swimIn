@@ -15,6 +15,7 @@ export const signUpSchema = yup.object().shape({
     .required('パスワードを入力してください')
     .oneOf([yup.ref('password')], 'パスワードが一致していません'),
 })
+
 export const signInSchema = yup.object().shape({
   email: yup
     .string()
@@ -24,6 +25,14 @@ export const signInSchema = yup.object().shape({
     .string()
     .required('パスワードを入力してください')
     .min(8, 'パスワードは８語以上で入力してください'),
+})
+
+export const editSchema = yup.object().shape({
+  name: yup.string().required('名前を入力してください'),
+  email: yup
+    .string()
+    .required('メールアドレスを入力してください')
+    .email('メールアドレスの形式が正しくありません'),
 })
 
 export const serchUserSchema = yup.object().shape({

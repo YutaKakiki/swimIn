@@ -1,4 +1,4 @@
-import PersonIcon from '@mui/icons-material/Person'
+// import PersonIcon from '@mui/icons-material/Person'
 import {
   AppBar,
   Avatar,
@@ -13,6 +13,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useUserState } from '../hooks/useGrobalState'
 import UserProfModal from './UserModalContent'
+import { UserProfileImage } from './UserProfileImage'
 
 export const Header = () => {
   const [user] = useUserState()
@@ -62,7 +63,7 @@ export const Header = () => {
                     <IconButton onClick={handleOpen}>
                       <Avatar>
                         {/* 実際は登録した写真 */}
-                        <PersonIcon />
+                        <UserProfileImage width={40} height={40} />
                       </Avatar>
                     </IconButton>
                   </Box>
@@ -111,7 +112,7 @@ export const Header = () => {
         </Container>
       </AppBar>
       {user.isSignIn && (
-        <Modal open={open} onClose={handleClose} sx={{ top: '20%' }}>
+        <Modal open={open} onClose={handleClose} sx={{ top: '25%' }}>
           <UserProfModal />
         </Modal>
       )}

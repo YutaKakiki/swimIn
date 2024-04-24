@@ -1,11 +1,11 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
-import PersonIcon from '@mui/icons-material/Person'
 import { Avatar, Box, Button, IconButton, Typography } from '@mui/material'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useSWRConfig } from 'swr'
 import { useUserState } from '../hooks/useGrobalState'
+import { OtherUserProfileImage } from './OtherUserProfileImage'
 
 type PropsTypes = {
   targetUser: {
@@ -75,12 +75,23 @@ const FollowTargetUser: React.FC<PropsTypes> = ({
         }}
       >
         {targetUser.id == 0 && (
-          <Box>検索したユーザーは見つかりませんでした</Box>
+          <>
+            <Typography sx={{ textAlign: 'center' }}>
+              検索したユーザーは
+            </Typography>
+            <Typography sx={{ textAlign: 'center' }}>
+              見つかりませんでした
+            </Typography>
+          </>
         )}
         {targetUser.id != 0 && targetUser.id != user.id && (
           <>
-            <Avatar sx={{ width: 80, height: 80 }}>
-              <PersonIcon sx={{ fontSize: { xs: '80px' } }} />
+            <Avatar sx={{ width: 80, height: 80, m: '0 auto', mb: '10px' }}>
+              <OtherUserProfileImage
+                height={80}
+                width={80}
+                otherUser={targetUser}
+              />
             </Avatar>
             <Typography sx={{ pt: '20px', textAlign: 'center' }}>
               {targetUser.name}
@@ -100,7 +111,7 @@ const FollowTargetUser: React.FC<PropsTypes> = ({
         {targetUser.id == user.id && (
           <>
             <Typography sx={{ textAlign: 'center' }}>
-              自分を追加することはできません
+              自分を追加することは できません
             </Typography>
           </>
         )}

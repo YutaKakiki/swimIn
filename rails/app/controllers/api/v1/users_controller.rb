@@ -5,19 +5,19 @@ class Api::V1::UsersController < ApplicationController
 
   def show
     user=User.find_by(uid: CGI.unescape(params[:id])+".com")
-    render json: user,serializer: CurrentUserSerializer, status: :ok
+    render json: user, serializer:CurrentUserSerializer  ,status: :ok
   end
 
   def update
-    user=User.find_by(uid: CGI.unescape(params[:id])+".com")
-    user.update(user_params)
-    if user.save
-      render json:user,serializer: CurrentUserSerializer, status: :ok
+    user = User.find_by(id: params[:id])
+    if user.update(user_params)
+      render json: user, serializer: CurrentUserSerializer, status: :ok
     else
-      render json: {error:"ユーザの更新に失敗しました"},stauts: :bad_request
+      render json: { error: "ユーザの更新に失敗しました" }, status: :bad_request
     end
-
   end
+
+
 
   def following
     following=current_api_v1_user.following
@@ -33,6 +33,8 @@ class Api::V1::UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:name,:email,:image)
+    params.require(:user).permit(:id,:name,:email)
   end
+
+
 end

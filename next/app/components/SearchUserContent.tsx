@@ -44,9 +44,11 @@ const SearchUserContent: React.FC<PropsTypes> = ({
   })
 
   const onSubmit = async (formData: { email: string }) => {
-    const res = formData.email
+    const email = formData.email
     const url =
-      process.env.NEXT_PUBLIC_API_BASE_URL + '/users/' + encodeURIComponent(res)
+      process.env.NEXT_PUBLIC_API_BASE_URL +
+      '/users/' +
+      encodeURIComponent(email)
     const headers = {
       'Content-Type': 'application/json',
       'access-token': localStorage.getItem('access-token'),
