@@ -1,12 +1,12 @@
 import GroupsIcon from '@mui/icons-material/Groups'
 import HomeIcon from '@mui/icons-material/Home'
 import HotelIcon from '@mui/icons-material/Hotel'
-import InfoIcon from '@mui/icons-material/Info'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { AppBar, Box, Container, IconButton } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { useUserState } from '../hooks/useGrobalState'
+import { useUserState } from '../../hooks/useGrobalState'
 
 const Footer = () => {
   const [user] = useUserState()
@@ -25,26 +25,27 @@ const Footer = () => {
                 display: 'flex',
                 alignItems: 'baseline',
                 justifyContent: 'space-between',
+                mt: '-15px',
               }}
             >
               <Box>
-                <Link href="#">
+                <Link href="/">
                   <IconButton>
-                    <HotelIcon sx={{ fontSize: '45px', color: '#4d4d4d' }} />
+                    <HomeIcon sx={{ fontSize: '38px', color: '#4d4d4d' }} />
                   </IconButton>
                 </Link>
               </Box>
               <Box>
                 <Link href="/friends">
                   <IconButton>
-                    <GroupsIcon sx={{ fontSize: '45px', color: '#4d4d4d' }} />
+                    <GroupsIcon sx={{ fontSize: '41px', color: '#4d4d4d' }} />
                   </IconButton>
                 </Link>
               </Box>
               <Box>
-                <Link href="/">
+                <Link href="#">
                   <IconButton>
-                    <HomeIcon sx={{ fontSize: '45px', color: '#4d4d4d' }} />
+                    <HotelIcon sx={{ fontSize: '38px', color: '#4d4d4d' }} />
                   </IconButton>
                 </Link>
               </Box>
@@ -55,8 +56,8 @@ const Footer = () => {
                       <Image
                         src="/crownIcon.png"
                         alt="crown"
-                        width={36}
-                        height={36}
+                        width={33}
+                        height={33}
                       />
                     </IconButton>
                   </Link>
@@ -65,9 +66,9 @@ const Footer = () => {
               <Box>
                 <Link href="#">
                   <IconButton>
-                    <InfoIcon
+                    <SettingsIcon
                       sx={{
-                        fontSize: '43px',
+                        fontSize: '33px',
                         color: '#4d4d4d',
                       }}
                     />

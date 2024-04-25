@@ -14,17 +14,13 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { serchUserSchema } from '../util/yupRules'
-import FollowTargetUser from './FollowTargetUser'
+import { serchUserSchema } from '../../util/yupRules'
+import FollowTargetUser from './SerchResult'
 
 type PropsTypes = {
   setOpen: (value: boolean) => void
-  // setRevalidate: (value: boolean) => void
 }
-const SearchUserContent: React.FC<PropsTypes> = ({
-  setOpen,
-  // setRevalidate,
-}) => {
+const SearchForm: React.FC<PropsTypes> = ({ setOpen }) => {
   const defaultValue = {
     id: 0,
     name: '',
@@ -33,7 +29,6 @@ const SearchUserContent: React.FC<PropsTypes> = ({
   const [targetUser, setTargetUser] = useState(defaultValue)
   const [isSerched, setIsSerched] = useState(false)
 
-  // setRevalidate(false)
   const {
     handleSubmit,
     formState: { errors },
@@ -154,4 +149,4 @@ const SearchUserContent: React.FC<PropsTypes> = ({
   )
 }
 
-export default SearchUserContent
+export default SearchForm

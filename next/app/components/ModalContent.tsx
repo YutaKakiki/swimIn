@@ -1,6 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit'
 import LogoutIcon from '@mui/icons-material/Logout'
-// import PersonIcon from '@mui/icons-material/Person'
 import {
   Avatar,
   Box,
@@ -12,9 +11,11 @@ import {
 import Link from 'next/link'
 import { useState } from 'react'
 import { useUserState } from '../hooks/useGrobalState'
-import UserEditForm from './UserEditForm'
-import { UserProfileImage } from './UserProfileImage'
-const UserModalContent = () => {
+
+import { CurrentUserProf } from './CurrentUserProf'
+import EditForm from './EditForm'
+
+const ModalContent = () => {
   const [user] = useUserState()
   const [openEdit, setOpenEdit] = useState(false)
   const handleClick = () => {
@@ -46,7 +47,7 @@ const UserModalContent = () => {
                   <Avatar
                     sx={{ width: 80, height: 80, m: '0 auto', mb: '10px' }}
                   >
-                    <UserProfileImage width={80} height={80} />
+                    <CurrentUserProf width={80} height={80} />
                   </Avatar>
                   <Typography sx={{ pt: '20px', textAlign: 'center' }}>
                     {user.name}
@@ -78,7 +79,7 @@ const UserModalContent = () => {
             )}
 
             {openEdit && (
-              <UserEditForm openEdit={openEdit} setOpenEdit={setOpenEdit} />
+              <EditForm openEdit={openEdit} setOpenEdit={setOpenEdit} />
             )}
           </Card>
         </Container>
@@ -87,4 +88,4 @@ const UserModalContent = () => {
   )
 }
 
-export default UserModalContent
+export default ModalContent

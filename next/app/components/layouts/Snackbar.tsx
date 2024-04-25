@@ -2,7 +2,7 @@
 import { Alert, Box, Container, Snackbar } from '@mui/material'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { useSnackbarState } from '../hooks/useGrobalState'
+import { useSnackbarState } from '../../hooks/useGrobalState'
 
 const PutSnackbar = () => {
   const [snackbar, setSnackbar] = useSnackbarState()

@@ -13,7 +13,7 @@ type SignInFormDataType = {
   password: string
 }
 
-const SignIn = () => {
+const SignInPage = () => {
   const [user, setUser] = useUserState()
   const [isLoading, setIsLoading] = useState(false)
   const {
@@ -116,4 +116,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default SignInPage

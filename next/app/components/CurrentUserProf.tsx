@@ -7,7 +7,7 @@ type PropsTypes = {
   width: number
   height: number
 }
-export const UserProfileImage: React.FC<PropsTypes> = ({ width, height }) => {
+export const CurrentUserProf: React.FC<PropsTypes> = ({ width, height }) => {
   const [user] = useUserState()
   const gravatarUrl = useGravatar(user.email)
   return (

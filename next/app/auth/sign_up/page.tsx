@@ -16,7 +16,7 @@ type SignUpFormDataType = {
   password_confirmation: string
 }
 
-const SignUp = () => {
+const SignUpPage = () => {
   const {
     handleSubmit,
     control,
@@ -152,4 +152,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+export default SignUpPage

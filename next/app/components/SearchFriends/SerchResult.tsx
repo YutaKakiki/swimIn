@@ -4,8 +4,8 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useSWRConfig } from 'swr'
-import { useUserState } from '../hooks/useGrobalState'
-import { OtherUserProfileImage } from './OtherUserProfileImage'
+import { useUserState } from '../../hooks/useGrobalState'
+import { FriendsProf } from '../Friends/FriendsProf'
 
 type PropsTypes = {
   targetUser: {
@@ -22,7 +22,7 @@ type FollowingUserType = {
   name: string
   email: string
 }
-const FollowTargetUser: React.FC<PropsTypes> = ({
+const SerchResult: React.FC<PropsTypes> = ({
   targetUser,
   setIsSerched,
   setOpen,
@@ -87,13 +87,9 @@ const FollowTargetUser: React.FC<PropsTypes> = ({
         {targetUser.id != 0 && targetUser.id != user.id && (
           <>
             <Avatar sx={{ width: 80, height: 80, m: '0 auto', mb: '10px' }}>
-              <OtherUserProfileImage
-                height={80}
-                width={80}
-                otherUser={targetUser}
-              />
+              <FriendsProf height={80} width={80} otherUser={targetUser} />
             </Avatar>
-            <Typography sx={{ pt: '20px', textAlign: 'center' }}>
+            <Typography sx={{ mt: '20px', textAlign: 'center' }}>
               {targetUser.name}
             </Typography>
             {followingUsersEmail.includes(targetUser.email) && (
@@ -120,4 +116,4 @@ const FollowTargetUser: React.FC<PropsTypes> = ({
   )
 }
 
-export default FollowTargetUser
+export default SerchResult

@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import { useGravatar } from '../hooks/useGravatar'
+import { useGravatar } from '../../hooks/useGravatar'
 
 type PropsTypes = {
   width: number
@@ -11,7 +11,7 @@ type PropsTypes = {
     email: string
   }
 }
-export const OtherUserProfileImage: React.FC<PropsTypes> = ({
+export const FriendsProf: React.FC<PropsTypes> = ({
   width,
   height,
   otherUser,

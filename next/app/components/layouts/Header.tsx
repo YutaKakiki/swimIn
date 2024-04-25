@@ -11,9 +11,9 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { useUserState } from '../hooks/useGrobalState'
-import UserProfModal from './UserModalContent'
-import { UserProfileImage } from './UserProfileImage'
+import { useUserState } from '../../hooks/useGrobalState'
+import { CurrentUserProf } from '../CurrentUserProf'
+import ModalContent from '../ModalContent'
 
 export const Header = () => {
   const [user] = useUserState()
@@ -62,8 +62,7 @@ export const Header = () => {
                   <Box sx={{ mb: '-10.5px', mt: '-8px' }}>
                     <IconButton onClick={handleOpen}>
                       <Avatar>
-                        {/* 実際は登録した写真 */}
-                        <UserProfileImage width={40} height={40} />
+                        <CurrentUserProf width={40} height={40} />
                       </Avatar>
                     </IconButton>
                   </Box>
@@ -113,7 +112,7 @@ export const Header = () => {
       </AppBar>
       {user.isSignIn && (
         <Modal open={open} onClose={handleClose} sx={{ top: '25%' }}>
-          <UserProfModal />
+          <ModalContent />
         </Modal>
       )}
     </>

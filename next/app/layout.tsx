@@ -1,12 +1,11 @@
 'use client'
+
 import { ThemeProvider } from '@emotion/react'
 import { Box } from '@mui/material'
-import Footer from './components/Footer'
-import { Header } from './components/Header'
-import PutSnackbar from './components/Snackbar'
+import Footer from './components/layouts/Footer'
+import { Header } from './components/layouts/Header'
+import PutSnackbar from './components/layouts/Snackbar'
 import CurrentUser from './components/userAuth/CurrentUser'
-
-// import UserProfModal from './components/userProfModal'
 import theme from './style/theme'
 
 export default function RootLayout({

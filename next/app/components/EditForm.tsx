@@ -17,7 +17,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useSWRConfig } from 'swr'
 import { useUserState } from '../hooks/useGrobalState'
 import { editSchema } from '../util/yupRules'
-import { UserProfileImage } from './UserProfileImage'
+import { CurrentUserProf } from './CurrentUserProf'
 
 type PropsTypes = {
   openEdit: boolean
@@ -28,7 +28,7 @@ type UpdateProfileDataType = {
   name: string
   email: string
 }
-const UserEditForm: React.FC<PropsTypes> = ({ openEdit, setOpenEdit }) => {
+const EditForm: React.FC<PropsTypes> = ({ openEdit, setOpenEdit }) => {
   const { mutate } = useSWRConfig()
   const [user, setUser] = useUserState()
   const handleBack = () => {
@@ -85,7 +85,7 @@ const UserEditForm: React.FC<PropsTypes> = ({ openEdit, setOpenEdit }) => {
         <Box>
           <Link href="https://ja.gravatar.com/">
             <Avatar sx={{ width: 80, height: 80, m: '0 auto', mb: '10px' }}>
-              <UserProfileImage width={80} height={80} />
+              <CurrentUserProf width={80} height={80} />
             </Avatar>
           </Link>
           <Typography fontSize={10} sx={{ mb: '10px' }}>
@@ -140,4 +140,4 @@ const UserEditForm: React.FC<PropsTypes> = ({ openEdit, setOpenEdit }) => {
   )
 }
 
-export default UserEditForm
+export default EditForm
