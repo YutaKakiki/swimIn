@@ -1,5 +1,6 @@
 'use client'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
 import PersonSearchIcon from '@mui/icons-material/PersonSearch'
 import {
   Avatar,
@@ -13,11 +14,12 @@ import {
   Slide,
   Typography,
 } from '@mui/material'
+import axios from 'axios'
 import React, { useState } from 'react'
-import useSWR from 'swr'
-import Friends from '../components/Friends/Friends'
-import { FriendsProf } from '../components/Friends/FriendsProf'
-import SearchForm from '../components/SearchFriends/SerchForm'
+import useSWR, { useSWRConfig } from 'swr'
+import Friends from '../components/friends/Friends'
+import { FriendsProf } from '../components/friends/FriendsProf'
+import SearchForm from '../components/searchFriends/SerchForm'
 import fetcher from '../util/fetcher'
 
 type FriendsType = {
@@ -43,12 +45,30 @@ const FriendsPage = () => {
     setOpen(false)
   }
   const handleSlideClose = () => {
-    setTimeout(() => setShow(true), 450)
+    setTimeout(() => setShow(true), 390)
     setSlide(false)
   }
 
   const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/users/following'
   const { data } = useSWR(url, fetcher)
+
+  const { mutate } = useSWRConfig()
+  const handleUnfollow = () => {
+    const headers = {
+      'Content-Type': 'application/json',
+      'access-token': localStorage.getItem('access-token'),
+      client: localStorage.getItem('client'),
+      uid: localStorage.getItem('uid'),
+    }
+    const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/relationships'
+    axios.delete(url, { headers, data: { id: friend.id } }).then(() => {
+      const revalidateUrl =
+        process.env.NEXT_PUBLIC_API_BASE_URL + '/users/following'
+      mutate(revalidateUrl)
+      setTimeout(() => setShow(true), 390)
+      setSlide(false)
+    })
+  }
 
   return (
     <>
@@ -93,11 +113,12 @@ const FriendsPage = () => {
       )}
 
       {/* フレンド詳細画面をスライドイン */}
+      {/* getBoundingClientRectのエラーでる */}
       {/* コンポーネントに切り出せたら理想だけど、なんかエラー出るのでこのまま */}
       <Slide
         in={slide}
         direction="left"
-        timeout={600}
+        timeout={550}
         mountOnEnter
         unmountOnExit
       >
@@ -109,6 +130,7 @@ const FriendsPage = () => {
                 height: { xs: '600px' },
                 margin: '0 auto',
                 position: 'relative',
+                bgcolor: '#f8f8ff',
               }}
             >
               <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -136,6 +158,16 @@ const FriendsPage = () => {
                 <Typography sx={{ pt: '20px', textAlign: 'center' }}>
                   起床中
                 </Typography>
+              </Box>
+              <Box sx={{ top: '530px', right: '5px', position: 'absolute' }}>
+                <Button
+                  sx={{ display: 'flex', mt: '20px' }}
+                  variant="outlined"
+                  onClick={handleUnfollow}
+                >
+                  <PersonRemoveIcon />
+                  <Typography sx={{ ml: '12px' }}>友達から削除</Typography>
+                </Button>
               </Box>
             </Card>
           </Container>

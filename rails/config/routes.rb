@@ -5,7 +5,7 @@ Rails.application.routes.draw do
         registrations: "api/v1/auth/registrations",
       }
 
-      resource :relationship, only: [:create, :destroy]
+      resource :relationships, only: [:create, :destroy]
 
       resources :users, only: [:show, :update, :destroy] do
         collection do
@@ -19,7 +19,9 @@ Rails.application.routes.draw do
         resource :sessions, only: [:show]
       end
 
-      get "health_check", to: "health_check#index"
+      resource :sleeps
+
+      # get "health_check", to: "health_check#index"
 
     end
   end

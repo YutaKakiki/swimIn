@@ -10,8 +10,7 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import { useState } from 'react'
-import { useUserState } from '../hooks/useGrobalState'
-
+import { useUserState } from '../../hooks/useGrobalState'
 import { CurrentUserProf } from './CurrentUserProf'
 import EditForm from './EditForm'
 
@@ -56,6 +55,14 @@ const ModalContent = () => {
                     起床中
                   </Typography>
                 </Box>
+                <Box sx={{ top: '75%', right: 0, position: 'absolute' }}>
+                  <Box sx={{ display: 'flex' }}>
+                    <IconButton onClick={handleClick}>
+                      <Typography>編集</Typography>
+                      <EditIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
 
                 <Box sx={{ top: '86%', right: 0, position: 'absolute' }}>
                   <Box sx={{ display: 'flex' }}>
@@ -65,14 +72,6 @@ const ModalContent = () => {
                         <LogoutIcon />
                       </IconButton>
                     </Link>
-                  </Box>
-                </Box>
-                <Box sx={{ top: '75%', right: 0, position: 'absolute' }}>
-                  <Box sx={{ display: 'flex' }}>
-                    <IconButton onClick={handleClick}>
-                      <Typography>編集</Typography>
-                      <EditIcon />
-                    </IconButton>
                   </Box>
                 </Box>
               </>

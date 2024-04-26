@@ -15,7 +15,7 @@ import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { serchUserSchema } from '../../util/yupRules'
-import FollowTargetUser from './SerchResult'
+import SearchResult from './SearchResult'
 
 type PropsTypes = {
   setOpen: (value: boolean) => void
@@ -136,7 +136,7 @@ const SearchForm: React.FC<PropsTypes> = ({ setOpen }) => {
               </Box>
             )}
             {isSerched && (
-              <FollowTargetUser
+              <SearchResult
                 targetUser={targetUser}
                 setIsSerched={setIsSerched}
                 setOpen={setOpen}

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useSWRConfig } from 'swr'
 import { useUserState } from '../../hooks/useGrobalState'
-import { FriendsProf } from '../Friends/FriendsProf'
+import { FriendsProf } from '../friends/FriendsProf'
 
 type PropsTypes = {
   targetUser: {
@@ -22,7 +22,7 @@ type FollowingUserType = {
   name: string
   email: string
 }
-const SerchResult: React.FC<PropsTypes> = ({
+const SearchResult: React.FC<PropsTypes> = ({
   targetUser,
   setIsSerched,
   setOpen,
@@ -42,7 +42,7 @@ const SerchResult: React.FC<PropsTypes> = ({
 
   const handleFollow = () => {
     const data = targetUser
-    const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/relationship'
+    const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/relationships'
     const headers = {
       'Content-Type': 'application/json',
       'access-token': localStorage.getItem('access-token'),
@@ -116,4 +116,4 @@ const SerchResult: React.FC<PropsTypes> = ({
   )
 }
 
-export default SerchResult
+export default SearchResult

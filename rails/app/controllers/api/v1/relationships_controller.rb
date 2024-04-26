@@ -16,7 +16,7 @@ class Api::V1::RelationshipsController < ApplicationController
   end
 
   def destroy
-    user=User.find(params[:id])
+    user=User.find_by(id:params[:id])
     current_api_v1_user.unfollow(user)
     render json: user,status: :ok
   end

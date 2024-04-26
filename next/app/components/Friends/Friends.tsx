@@ -10,7 +10,6 @@ import {
   Typography,
 } from '@mui/material'
 import React from 'react'
-
 import { FriendsProf } from './FriendsProf'
 
 type PropsTypes = {

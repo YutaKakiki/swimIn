@@ -64,7 +64,7 @@ const Footer = () => {
                 </Box>
               </Box>
               <Box>
-                <Link href="#">
+                <Link href="/userSetting">
                   <IconButton>
                     <SettingsIcon
                       sx={{

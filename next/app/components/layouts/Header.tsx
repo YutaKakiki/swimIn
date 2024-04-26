@@ -12,8 +12,8 @@ import {
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useUserState } from '../../hooks/useGrobalState'
-import { CurrentUserProf } from '../CurrentUserProf'
-import ModalContent from '../ModalContent'
+import { CurrentUserProf } from '../currentUser/CurrentUserProf'
+import ModalContent from '../currentUser/ModalContent'
 
 export const Header = () => {
   const [user] = useUserState()
@@ -111,7 +111,7 @@ export const Header = () => {
         </Container>
       </AppBar>
       {user.isSignIn && (
-        <Modal open={open} onClose={handleClose} sx={{ top: '25%' }}>
+        <Modal open={open} onClose={handleClose} sx={{ top: '15%' }}>
           <ModalContent />
         </Modal>
       )}

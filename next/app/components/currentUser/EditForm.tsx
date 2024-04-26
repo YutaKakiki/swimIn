@@ -15,8 +15,8 @@ import Link from 'next/link'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useSWRConfig } from 'swr'
-import { useUserState } from '../hooks/useGrobalState'
-import { editSchema } from '../util/yupRules'
+import { useUserState } from '../../hooks/useGrobalState'
+import { editSchema } from '../../util/yupRules'
 import { CurrentUserProf } from './CurrentUserProf'
 
 type PropsTypes = {
