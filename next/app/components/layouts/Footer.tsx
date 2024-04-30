@@ -43,7 +43,7 @@ const Footer = () => {
                 </Link>
               </Box>
               <Box>
-                <Link href="#">
+                <Link href="/sleep">
                   <IconButton>
                     <HotelIcon sx={{ fontSize: '38px', color: '#4d4d4d' }} />
                   </IconButton>

@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         resource :sessions, only: [:show]
       end
 
-      resource :sleeps
+      resources :sleeps,only:[:show,:create,:destroy,:update]
 
       # get "health_check", to: "health_check#index"
 

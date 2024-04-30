@@ -1,4 +1,5 @@
 'use client'
+import dayjs, { Dayjs } from 'dayjs'
 import useSWR from 'swr'
 
 type userStateType = {
@@ -42,4 +43,29 @@ export const useSnackbarState = () => {
     snackbarStateType,
     (value: snackbarStateType) => void,
   ]
+}
+
+type userSleepType = {
+  userId: number
+  state: 'wake' | 'sleep'
+  targetWake: Dayjs
+  actualWake: Dayjs
+  bedtime: Dayjs
+  comment: string
+  isFetched: boolean
+}
+export const useSleepState = () => {
+  const fallbackData: userSleepType = {
+    userId: 0,
+    state: 'wake',
+    targetWake: dayjs(),
+    actualWake: dayjs(),
+    bedtime: dayjs(),
+    comment: '',
+    isFetched: false,
+  }
+  const { data: state, mutate: setState } = useSWR('sleep', null, {
+    fallbackData,
+  })
+  return [state, setState] as [userSleepType, (value: userSleepType) => void]
 }

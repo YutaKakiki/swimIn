@@ -16,6 +16,8 @@ class User < ApplicationRecord
 
   has_many :calculated_times, dependent: :destroy
 
+  has_one :sleep ,dependent: :destroy
+
   def follow(user)
     active_relationships.create(followed_id: user.id)
   end
@@ -27,6 +29,18 @@ class User < ApplicationRecord
   def following?(user)
     self.following.include?(user)
   end
+
+  def calculate_time(actual_wake)
+    sleep=self.sleep
+    bedtime=sleep.bedtime
+    target_wake=sleep.target_wake
+
+    sleep_time=(actual_wake - bedtime).to_i / 60
+    diff_time=(actual_wake - target_wake).to_i / 60
+
+    self.calculated_times.create(sleep_time:sleep_time,diff_time:diff_time)
+  end
+
 
 
 end

@@ -1,5 +1,12 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
-import { Avatar, Box, Button, IconButton, Typography } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React from 'react'
@@ -36,7 +43,8 @@ const SearchResult: React.FC<PropsTypes> = ({
   const cacheFollowingData = cache.get(
     process.env.NEXT_PUBLIC_API_BASE_URL + '/users/following',
   )?.data
-  const followingUsersEmail = cacheFollowingData.map(
+
+  const followingUsersEmail = cacheFollowingData.followings.map(
     (user: FollowingUserType) => user.email,
   )
 
@@ -68,10 +76,7 @@ const SearchResult: React.FC<PropsTypes> = ({
       </IconButton>
       <Box
         sx={{
-          position: 'absolute',
           top: '130px',
-          left: '50%',
-          transform: 'translate(-50%,-50%)',
         }}
       >
         {targetUser.id == 0 && (
@@ -86,22 +91,41 @@ const SearchResult: React.FC<PropsTypes> = ({
         )}
         {targetUser.id != 0 && targetUser.id != user.id && (
           <>
-            <Avatar sx={{ width: 80, height: 80, m: '0 auto', mb: '10px' }}>
-              <FriendsProf height={80} width={80} otherUser={targetUser} />
-            </Avatar>
-            <Typography sx={{ mt: '20px', textAlign: 'center' }}>
-              {targetUser.name}
-            </Typography>
-            {followingUsersEmail.includes(targetUser.email) && (
-              <Button sx={{ mt: '30px' }} disabled>
-                追加済み
-              </Button>
-            )}
-            {!followingUsersEmail.includes(targetUser.email) && (
-              <Button sx={{ mt: '30px' }} onClick={handleFollow}>
-                追加する
-              </Button>
-            )}
+            <Stack>
+              <Avatar
+                sx={{
+                  width: 80,
+                  height: 80,
+                  m: '0 auto',
+                  mb: '10px',
+                }}
+              >
+                <FriendsProf height={80} width={80} otherUser={targetUser} />
+              </Avatar>
+              <Typography sx={{ mt: '20px', textAlign: 'center' }}>
+                {targetUser.name}
+              </Typography>
+              {followingUsersEmail.includes(targetUser.email) && (
+                <Button
+                  sx={{ m: '0 auto', mt: '30px', width: '90px' }}
+                  disabled
+                  variant="outlined"
+                >
+                  追加済み
+                </Button>
+              )}
+              {!followingUsersEmail.includes(targetUser.email) && (
+                <Box sx={{ m: '0 auto' }}>
+                  <Button
+                    onClick={handleFollow}
+                    variant="outlined"
+                    sx={{ mt: '30px' }}
+                  >
+                    追加する
+                  </Button>
+                </Box>
+              )}
+            </Stack>
           </>
         )}
         {targetUser.id == user.id && (

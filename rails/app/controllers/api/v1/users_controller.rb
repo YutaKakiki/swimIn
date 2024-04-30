@@ -20,8 +20,9 @@ class Api::V1::UsersController < ApplicationController
 
 
   def following
-    following=current_api_v1_user.following
-    render json: following, each_serializer: CurrentUserSerializer
+    followings=current_api_v1_user.following
+    followings_sleep=followings.map {|user| user.sleep}
+    render json: {followings:followings,followings_sleep:followings_sleep}, each_serializer: CurrentUserSerializer
   end
 
 

@@ -3,11 +3,11 @@ import axios from 'axios'
 
 import { useEffect } from 'react'
 
-import { useUserState } from '@/app/hooks/useGrobalState'
+import { useSleepState, useUserState } from '@/app/hooks/useGrobalState'
 
 const CurrentUser = () => {
   const [user, setUser] = useUserState()
-  console.log(user)
+  const [sleep, setSleep] = useSleepState()
   useEffect(() => {
     if (user.isFetched && user.isSignIn) {
       return
@@ -28,6 +28,10 @@ const CurrentUser = () => {
             ...res.data,
             isFetched: true,
             isSignIn: true,
+          })
+          setSleep({
+            ...sleep,
+            isFetched: true,
           })
         })
         .catch((err) => {

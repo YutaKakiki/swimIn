@@ -10,12 +10,13 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import { useState } from 'react'
-import { useUserState } from '../../hooks/useGrobalState'
+import { useSleepState, useUserState } from '../../hooks/useGrobalState'
 import { CurrentUserProf } from './CurrentUserProf'
 import EditForm from './EditForm'
 
 const ModalContent = () => {
   const [user] = useUserState()
+  const [sleep] = useSleepState()
   const [openEdit, setOpenEdit] = useState(false)
   const handleClick = () => {
     setOpenEdit(true)
@@ -52,7 +53,7 @@ const ModalContent = () => {
                     {user.name}
                   </Typography>
                   <Typography sx={{ pt: '20px', textAlign: 'center' }}>
-                    起床中
+                    {sleep.state == 'sleep' ? '睡眠中 ' : '起床中'}
                   </Typography>
                 </Box>
                 <Box sx={{ top: '75%', right: 0, position: 'absolute' }}>

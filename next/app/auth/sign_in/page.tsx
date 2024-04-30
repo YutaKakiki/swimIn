@@ -6,7 +6,11 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { useSnackbarState, useUserState } from '@/app/hooks/useGrobalState'
+import {
+  useSleepState,
+  useSnackbarState,
+  useUserState,
+} from '@/app/hooks/useGrobalState'
 import { signInSchema } from '@/app/util/yupRules'
 type SignInFormDataType = {
   email: string
@@ -14,6 +18,7 @@ type SignInFormDataType = {
 }
 
 const SignInPage = () => {
+  const [sleep, setSleep] = useSleepState()
   const [user, setUser] = useUserState()
   const [isLoading, setIsLoading] = useState(false)
   const {
@@ -43,6 +48,10 @@ const SignInPage = () => {
         setUser({
           ...user,
           isFetched: false,
+        })
+        setSleep({
+          ...sleep,
+          isFetched: true,
         })
         setSnackbar({
           message: 'ログインに成功しました',

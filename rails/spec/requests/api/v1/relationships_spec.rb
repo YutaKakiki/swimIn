@@ -21,7 +21,6 @@ RSpec.describe "Api::V1::Relationships", type: :request do
       let(:body){{email: current_user.email}}
       it "bad_requestレスポンスが返る" do
         subject
-        res=JSON.parse(response.body)
         expect(response).to have_http_status(:bad_request)
       end
     end

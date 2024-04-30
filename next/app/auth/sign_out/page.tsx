@@ -1,12 +1,18 @@
 'use client'
 import axios from 'axios'
+import dayjs from 'dayjs'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
-import { useSnackbarState, useUserState } from '@/app/hooks/useGrobalState'
+import {
+  useSleepState,
+  useSnackbarState,
+  useUserState,
+} from '@/app/hooks/useGrobalState'
 import useRequireSignIn from '@/app/hooks/useRequireSignIn'
 
 const SignOut = () => {
   useRequireSignIn()
+  const [, setSleep] = useSleepState()
   const [, setSnackbar] = useSnackbarState()
   const [, setUser] = useUserState()
   const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/auth/sign_out'
@@ -26,6 +32,13 @@ const SignOut = () => {
         email: '',
         isSignIn: false,
         isFetched: true,
+      })
+      setSleep({
+        userId: 0,
+        targetWake: dayjs(),
+        state: 'wake',
+        comment: '',
+        isFetched: false,
       })
       setSnackbar({
         message: 'ログアウトしました',
