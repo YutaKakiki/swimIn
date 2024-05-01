@@ -1,5 +1,4 @@
 import camelcaseKeys from 'camelcase-keys'
-
 import useSWR from 'swr'
 import { useSleepState, useUserState } from '../../hooks/useGrobalState'
 import fetcher from '@/app/util/fetcher'
@@ -16,7 +15,6 @@ const CurrentUserSleepState = () => {
     ...camelcaseKeysData,
     isFetched: true,
   })
-
   return <></>
 }
 

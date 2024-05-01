@@ -3,7 +3,6 @@ import HomeIcon from '@mui/icons-material/Home'
 import HotelIcon from '@mui/icons-material/Hotel'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { AppBar, Box, Container, IconButton } from '@mui/material'
-import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { useUserState } from '../../hooks/useGrobalState'
@@ -48,20 +47,6 @@ const Footer = () => {
                     <HotelIcon sx={{ fontSize: '38px', color: '#4d4d4d' }} />
                   </IconButton>
                 </Link>
-              </Box>
-              <Box>
-                <Box>
-                  <Link href="#">
-                    <IconButton>
-                      <Image
-                        src="/crownIcon.png"
-                        alt="crown"
-                        width={33}
-                        height={33}
-                      />
-                    </IconButton>
-                  </Link>
-                </Box>
               </Box>
               <Box>
                 <Link href="/userSetting">

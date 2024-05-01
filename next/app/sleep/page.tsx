@@ -62,7 +62,7 @@ const SleepPage = () => {
                               position: 'relative',
                               height: '150px',
                               width: '170px',
-                              bgcolor: '#96d4fa',
+                              bgcolor: '#adc5f7',
                             }}
                           >
                             <Stack spacing={4}>
@@ -85,7 +85,7 @@ const SleepPage = () => {
                               position: 'relative',
                               height: '150px',
                               width: '170px',
-                              bgcolor: '#faafaf',
+                              bgcolor: '#a3f0b7',
                             }}
                           >
                             <Stack spacing={4}>
@@ -98,10 +98,7 @@ const SleepPage = () => {
                                 </Typography>
                               </Box>
                               <Box sx={{ textAlign: 'center' }}>
-                                <Button
-                                  sx={{ bgcolor: '#ff7f50' }}
-                                  onClick={handleZoomIn}
-                                >
+                                <Button color="info" onClick={handleZoomIn}>
                                   起きる
                                 </Button>
                               </Box>
@@ -122,7 +119,7 @@ const SleepPage = () => {
                           position: 'relative',
                           height: '316px',
                           width: '170px',
-                          bgcolor: '#e6e6fa',
+                          bgcolor: '#c4daf2',
                         }}
                       >
                         <Typography textAlign={'center'}>
@@ -147,7 +144,7 @@ const SleepPage = () => {
                         width: '355px',
                         mt: '15px',
                         mb: '20px',
-                        bgcolor: '#f0f8ff',
+                        bgcolor: '#d5e2f0',
                       }}
                     >
                       <Stack spacing={4}>

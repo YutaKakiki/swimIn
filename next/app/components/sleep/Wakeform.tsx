@@ -109,10 +109,7 @@ const WakeForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
                   onChange={changeComment}
                 />
               </Box>
-              <Button
-                onClick={handleSubmit}
-                sx={{ bgcolor: '#ff7f50', mt: '20px' }}
-              >
+              <Button onClick={handleSubmit} sx={{ mt: '20px' }} color="info">
                 おはよう！
               </Button>
             </Stack>

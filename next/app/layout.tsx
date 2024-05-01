@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <ThemeProvider theme={theme}>
-        <body style={{ backgroundColor: '#f5f5f5' }}>
+        <body style={{ backgroundColor: '#e1ebf5' }}>
           <Header />
           <PutSnackbar />
           <Box sx={{ mt: '120px', pb: '100px' }}>{children}</Box>

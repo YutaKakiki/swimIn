@@ -1,3 +1,7 @@
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import ModeNightIcon from '@mui/icons-material/ModeNight'
+import ScheduleIcon from '@mui/icons-material/Schedule'
 import {
   Avatar,
   Box,
@@ -9,9 +13,9 @@ import {
   Typography,
 } from '@mui/material'
 
-// import { Dayjs } from 'dayjs'
-import { Dayjs } from 'dayjs'
-import React from 'react'
+import dayjs, { Dayjs } from 'dayjs'
+
+import React, { useEffect, useState } from 'react'
 
 import { FriendsProf } from './FriendsProf'
 
@@ -34,6 +38,8 @@ type PropsTypes = {
   show: boolean
   setFriend: (value: { id: number; name: string; email: string }) => void
   userSleep: FriendSleepType
+  friendSleep: FriendSleepType
+  setFriendSleep: (value: FriendSleepType) => void
 }
 
 const Friends: React.FC<PropsTypes> = ({
@@ -43,18 +49,46 @@ const Friends: React.FC<PropsTypes> = ({
   show,
   setFriend,
   userSleep,
+  friendSleep,
+  setFriendSleep,
 }) => {
+  const [shortendComment, setShortendComment] = useState(userSleep.comment)
   const handleSlideOpen = () => {
     setFriend(user)
-
+    setFriendSleep({
+      ...friendSleep,
+      ...userSleep,
+    })
     setShow(false)
     setSlide(true)
   }
+  const stateColor = userSleep
+    ? userSleep.state == 'wake'
+      ? '#a3f0b7'
+      : '#adc5f7'
+    : '#a3f0b7'
+
+  useEffect(() => {
+    if (shortendComment.length > 1) {
+      setShortendComment(shortendComment.substring(0, 17) + '...')
+    } else {
+      setShortendComment(shortendComment)
+    }
+  }, [])
   return (
     <>
       {show && (
-        <ListItem alignItems="flex-start">
-          <ListItemAvatar>
+        <ListItem
+          alignItems="flex-start"
+          sx={{
+            bgcolor: stateColor,
+            mt: '-13px',
+            borderRadius: '4px',
+            mb: '5px',
+            width: '100%',
+          }}
+        >
+          <ListItemAvatar sx={{ mt: '-9px' }}>
             <FormControlLabel
               label=""
               control={
@@ -66,7 +100,7 @@ const Friends: React.FC<PropsTypes> = ({
               }
             />
           </ListItemAvatar>
-          <Box sx={{ mt: '15px', ml: '-8px' }}>
+          <Box sx={{ ml: '-8px' }}>
             <Typography sx={{ fontWeight: 'bold' }}>{user.name}</Typography>
             <Box
               sx={{
@@ -75,25 +109,70 @@ const Friends: React.FC<PropsTypes> = ({
               }}
             >
               {userSleep && (
-                <Typography
-                  sx={{ fontWeight: 'bold', textAlign: 'left', width: '100px' }}
-                >
-                  {userSleep.state == 'wake' ? '起床中' : '睡眠中'}
-                </Typography>
+                <>
+                  <Box sx={{ width: '100px' }}>
+                    {userSleep.state == 'wake' ? (
+                      <>
+                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                          <Box
+                            sx={{
+                              color: '#f57e00',
+                              display: 'flex',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <LightModeIcon
+                              sx={{ mr: '10px' }}
+                              fontSize="small"
+                            />
+                            <Typography fontWeight={'bold'}>起床中</Typography>
+                          </Box>
+                          <Box sx={{ display: 'flex' }}>
+                            <ScheduleIcon sx={{ mr: '10px' }} />
+                            <Typography>
+                              {dayjs(userSleep.actualWake).format('HH:mm')}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </>
+                    ) : (
+                      <>
+                        <Box
+                          sx={{
+                            color: '#04206b',
+                            display: 'flex',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <ModeNightIcon sx={{ mr: '10px' }} />
+                          <Typography fontWeight={'bold'}>睡眠中</Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <AccessAlarmIcon sx={{ mr: '10px' }} />
+                          <Typography sx={{ mt: '2px' }}>
+                            {dayjs(userSleep.targetWake).format('HH:mm')}
+                          </Typography>
+                        </Box>
+                      </>
+                    )}
+                  </Box>
+                </>
               )}
-              <Divider orientation="vertical" flexItem sx={{ mr: '18px' }} />
+              <Divider orientation="vertical" flexItem sx={{ mr: '10px' }} />
               {userSleep && (
-                <Typography color="text.primary" width={150} noWrap>
-                  {userSleep.comment}
+                <Typography color="text.primary" width={150} sx={{}}>
+                  {shortendComment}
                 </Typography>
               )}
             </Box>
           </Box>
         </ListItem>
       )}
-      <Divider
-        sx={{ m: '0 0 0 auto', mt: '15px', mb: '-20px', width: '95%' }}
-      />
     </>
   )
 }

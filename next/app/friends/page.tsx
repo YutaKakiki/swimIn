@@ -16,6 +16,9 @@ import {
 } from '@mui/material'
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
+import dayjs, { Dayjs, extend } from 'dayjs'
+import duration from 'dayjs/plugin/duration'
+extend(duration)
 import React, { useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
 import Friends from '../components/friends/Friends'
@@ -29,18 +32,52 @@ type FriendsType = {
   name: string
   email: string
 }
+type FriendSleepType = {
+  targetWake: Dayjs
+  actualWake: Dayjs
+  state: 'wake' | 'sleep'
+  bedtime: Dayjs
+  comment: string
+}
 const FriendsPage = () => {
   const defaultValue = {
     id: 0,
     name: '',
     email: '',
   }
+  const sleepDefaultValue: FriendSleepType = {
+    targetWake: dayjs(),
+    actualWake: dayjs(),
+    state: 'wake',
+    bedtime: dayjs(),
+    comment: '（コメントなし）',
+  }
 
   // フレンド詳細で使う情報を管理
   const [friend, setFriend] = useState(defaultValue)
+  const [friendSleep, setFriendSleep] = useState(sleepDefaultValue)
+
   const [open, setOpen] = useState<boolean>(false)
   const [slide, setSlide] = useState(false)
   const [show, setShow] = useState(true)
+
+  const sleepTime = dayjs(friendSleep.actualWake).diff(
+    friendSleep.bedtime,
+    'minute',
+  )
+  const formattedSleepTime = dayjs
+    .duration(sleepTime, 'minute')
+    .format('HH時間mm分')
+
+  const diffTime = dayjs(friendSleep.actualWake).diff(
+    friendSleep.targetWake,
+    'minute',
+  )
+  const absDiffTime = dayjs.duration(Math.abs(diffTime), 'minute')
+  const formattedAbsDiffTime =
+    absDiffTime.asHours() < 1
+      ? absDiffTime.format('mm分')
+      : absDiffTime.format('HH時間mm分')
 
   const handleOpen = () => {
     setOpen(true)
@@ -57,6 +94,9 @@ const FriendsPage = () => {
   const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/users/following'
   const { data } = useSWR(url, fetcher)
   const camelCaseData = camelcaseKeys(data)
+  const nestedCamelcaseSleepData = camelCaseData
+    ? camelcaseKeys(camelCaseData.followingsSleep)
+    : sleepDefaultValue
 
   const { mutate } = useSWRConfig()
   const handleUnfollow = () => {
@@ -109,11 +149,13 @@ const FriendsPage = () => {
                     <List key={user.id}>
                       <Friends
                         user={user}
-                        userSleep={camelCaseData.followingsSleep[index]}
+                        userSleep={nestedCamelcaseSleepData[index]}
                         setSlide={setSlide}
                         setShow={setShow}
                         show={show}
                         setFriend={setFriend}
+                        friendSleep={friendSleep}
+                        setFriendSleep={setFriendSleep}
                       />
                     </List>
                   ),
@@ -130,7 +172,7 @@ const FriendsPage = () => {
         <Slide
           in={slide}
           direction="up"
-          timeout={550}
+          timeout={350}
           mountOnEnter
           unmountOnExit
         >
@@ -156,21 +198,117 @@ const FriendsPage = () => {
                 <Box
                   sx={{
                     position: 'absolute',
-                    top: '20%',
+                    top: '260px',
                     left: '50%',
                     transform: 'translate(-50%,-50%)',
                   }}
                 >
                   <Avatar
-                    sx={{ width: 80, height: 80, m: '0 auto', mb: '10px' }}
+                    sx={{
+                      width: 80,
+                      height: 80,
+                      m: '0 auto',
+                      mb: '10px',
+                    }}
                   >
                     <FriendsProf otherUser={friend} width={80} height={80} />
                   </Avatar>
                   <Typography sx={{ pt: '20px', textAlign: 'center' }}>
                     {friend.name}
                   </Typography>
-                  <Typography sx={{ pt: '20px', textAlign: 'center' }}>
-                    起床中
+                  {friendSleep.state == 'wake' ? (
+                    <Typography sx={{ pt: '20px', textAlign: 'center' }}>
+                      起床中
+                    </Typography>
+                  ) : (
+                    <Typography sx={{ pt: '20px', textAlign: 'center' }}>
+                      睡眠中
+                    </Typography>
+                  )}
+
+                  {friendSleep.state == 'wake' ? (
+                    <>
+                      <Typography sx={{ pt: '20px', textAlign: 'center' }}>
+                        本日の起床時間
+                      </Typography>
+                      <Typography sx={{ textAlign: 'center' }}>
+                        {dayjs(friendSleep.actualWake).format('HH時mm分')}
+                      </Typography>
+                      <Typography sx={{ pt: '20px', textAlign: 'center' }}>
+                        睡眠時間
+                      </Typography>
+                      <Typography sx={{ textAlign: 'center' }}>
+                        {formattedSleepTime}
+                      </Typography>
+
+                      {diffTime <= 0 ? (
+                        diffTime == 0 ? (
+                          <>
+                            <Typography
+                              sx={{ pt: '20px', textAlign: 'center' }}
+                            >
+                              目標時刻ぴったりに起床しました！
+                            </Typography>
+                          </>
+                        ) : (
+                          <>
+                            <Typography
+                              sx={{ pt: '20px', textAlign: 'center' }}
+                            >
+                              予定時刻よりも
+                            </Typography>
+                            <Typography
+                              sx={{ pt: '20px', textAlign: 'center' }}
+                            >
+                              {formattedAbsDiffTime}早く起床しました
+                            </Typography>
+                          </>
+                        )
+                      ) : (
+                        <>
+                          <Typography sx={{ pt: '20px', textAlign: 'center' }}>
+                            目標時刻よりも
+                          </Typography>
+                          <Typography sx={{ pt: '20px', textAlign: 'center' }}>
+                            {formattedAbsDiffTime}寝坊しました・・・
+                          </Typography>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <Typography sx={{ pt: '20px', textAlign: 'center' }}>
+                        就寝時刻
+                      </Typography>
+                      <Typography sx={{ textAlign: 'center' }}>
+                        {dayjs(friendSleep.bedtime).format('HH時mm分')}
+                      </Typography>
+                      <Typography sx={{ pt: '20px', textAlign: 'center' }}>
+                        目標起床時刻
+                      </Typography>
+                      <Typography
+                        sx={{
+                          textAlign: 'center',
+                        }}
+                      >
+                        {dayjs(friendSleep.targetWake).format('HH時mm分')}
+                      </Typography>
+                    </>
+                  )}
+                  <Typography
+                    sx={{
+                      mt: '20px',
+                      width: '300px',
+                      height: '80px',
+                      textAlign: 'left',
+                      pl: '13px',
+                      pt: '10px',
+                      border: '1px solid',
+                      borderColor: 'black',
+                      borderRadius: '10px',
+                    }}
+                  >
+                    {friendSleep.comment}
                   </Typography>
                 </Box>
                 <Box sx={{ top: '530px', right: '5px', position: 'absolute' }}>

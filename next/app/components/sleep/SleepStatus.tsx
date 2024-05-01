@@ -5,20 +5,20 @@ import { useSleepState } from '@/app/hooks/useGrobalState'
 
 const SleepStatus = () => {
   const [sleep] = useSleepState()
-  const formettedTargetWake = dayjs(sleep.targetWake).format('HH時mm分')
+  const formettedTargetWake = dayjs(sleep.targetWake).format('HH:mm')
   return (
     <Card
       sx={{
         position: 'relative',
         height: '150px',
         width: '170px',
-        bgcolor: '#87cefa',
+        bgcolor: '#adc5f7',
       }}
     >
       <Stack spacing={2}>
         <Typography
           textAlign={'center'}
-          sx={{ mt: '30px', fontWeight: 'bold' }}
+          sx={{ mt: '30px', fontWeight: 'bold', fontSize: '20px' }}
         >
           睡眠中
         </Typography>
