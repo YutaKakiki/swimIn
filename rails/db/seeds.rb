@@ -6,20 +6,29 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 # メインのサンプルユーザーを1人作成する
-User.create!(name:  "柿木優汰",
+User.create!(name: "柿木優汰",
              email: "uta31501224@gmail.com",
-             password:              "password",
+             password: "password",
              password_confirmation: "password",
              confirmed_at: Time.current)
 
 # 追加のユーザーをまとめて生成する
 10.times do |n|
   name  = Faker::Name.name
-  email = "test#{n+1}@test.com"
+  email = "test#{n + 1}@test.com"
   password = "password"
-  User.create!(name:  name,
-               email: email,
-               password:              password,
+  User.create!(name:,
+               email:,
+               password:,
                password_confirmation: password,
-               confirmed_at:Time.current)
+               confirmed_at: Time.current)
+end
+
+user = User.find_by(email: "uta31501224@gmail.com")
+
+30.times do |_n|
+  FactoryBot.create(:calculated_time_4, user:)
+end
+5.times do |_n|
+  FactoryBot.create(:calculated_time_5, user:)
 end

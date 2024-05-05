@@ -24,15 +24,16 @@ const ListedCurrentUser = () => {
   const [sleep] = useSleepState()
   const [shortendComment, setShortendComment] = useState(sleep.comment)
   const [user] = useUserState()
-  const stateColor = sleep
-    ? sleep.state == 'wake'
-      ? '#a3f0b7'
-      : '#adc5f7'
-    : '#a3f0b7'
+  const stateColor =
+    sleep.state === 'wake' || sleep.state === 'sleep'
+      ? sleep.state === 'wake'
+        ? '#a3f0b7'
+        : '#adc5f7'
+      : '#a3f0b7'
 
   useEffect(() => {
-    if (shortendComment.length > 17) {
-      setShortendComment(shortendComment.substring(0, 17) + '...')
+    if (shortendComment.length > 15) {
+      setShortendComment(shortendComment.substring(0, 15) + '...')
     } else {
       setShortendComment(sleep.comment)
     }
@@ -53,6 +54,7 @@ const ListedCurrentUser = () => {
             pt: '-80apx',
             mb: '5px',
             borderRadius: '4px',
+            width: '100%',
           }}
         >
           <ListItemAvatar sx={{ mt: '-1px' }}>
@@ -69,49 +71,73 @@ const ListedCurrentUser = () => {
               }}
             >
               <Box sx={{ width: '100px' }}>
-                {sleep.state == 'wake' ? (
-                  <>
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                {sleep.state == 'wake' || sleep.state == 'sleep' ? (
+                  sleep.state == 'wake' ? (
+                    <>
+                      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                        <Box
+                          sx={{
+                            color: '#f57e00',
+                            display: 'flex',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <LightModeIcon sx={{ mr: '10px' }} fontSize="small" />
+                          <Typography fontWeight={'bold'}>起床中</Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex' }}>
+                          <ScheduleIcon sx={{ mr: '10px' }} />
+                          <Typography>{formattedTargetWake}</Typography>
+                        </Box>
+                      </Box>
+                    </>
+                  ) : (
+                    <>
                       <Box
                         sx={{
-                          color: '#f57e00',
+                          color: '#04206b',
                           display: 'flex',
                           alignItems: 'center',
                         }}
                       >
-                        <LightModeIcon sx={{ mr: '10px' }} fontSize="small" />
-                        <Typography fontWeight={'bold'}>起床中</Typography>
+                        <ModeNightIcon sx={{ mr: '10px' }} />
+                        <Typography fontWeight={'bold'}>睡眠中</Typography>
                       </Box>
-                      <Box sx={{ display: 'flex' }}>
-                        <ScheduleIcon sx={{ mr: '10px' }} />
-                        <Typography>{formattedTargetWake}</Typography>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <AccessAlarmIcon sx={{ mr: '10px' }} />
+                        <Typography sx={{ mt: '2px' }}>
+                          {formattedActualWake}
+                        </Typography>
                       </Box>
-                    </Box>
-                  </>
+                    </>
+                  )
                 ) : (
-                  <>
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Box
                       sx={{
-                        color: '#04206b',
+                        color: '#f57e00',
                         display: 'flex',
                         alignItems: 'center',
                       }}
                     >
-                      <ModeNightIcon sx={{ mr: '10px' }} />
-                      <Typography fontWeight={'bold'}>睡眠中</Typography>
+                      <LightModeIcon sx={{ mr: '10px' }} fontSize="small" />
+                      <Typography fontWeight={'bold'}>起床中</Typography>
                     </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <AccessAlarmIcon sx={{ mr: '10px' }} />
-                      <Typography sx={{ mt: '2px' }}>
-                        {formattedActualWake}
+                    <Box sx={{ display: 'flex' }}>
+                      <ScheduleIcon sx={{ mr: '10px' }} fontSize="small" />
+                      <Typography
+                        sx={{ fontWeight: 'bold' }}
+                        fontSize={'small'}
+                      >
+                        未設定
                       </Typography>
                     </Box>
-                  </>
+                  </Box>
                 )}
               </Box>
               <Divider orientation="vertical" flexItem sx={{ mr: '10px' }} />

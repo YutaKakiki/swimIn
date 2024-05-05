@@ -13,16 +13,19 @@ Rails.application.routes.draw do
         end
       end
 
-
       namespace :auth do
         resource :confirmations, only: [:update]
         resource :sessions, only: [:show]
       end
 
-      resources :sleeps,only:[:show,:create,:destroy,:update]
+      resources :sleeps, only: [:show, :create, :update] do
+        collection do
+          get :sleeping_friends
+          get :return_times
+        end
+      end
 
       # get "health_check", to: "health_check#index"
-
     end
   end
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?

@@ -2,17 +2,19 @@ require "rails_helper"
 
 RSpec.describe "Api::V1::Auth::Sessions", type: :request do
   describe "GET /api/v1/auth/sessions" do
-    subject { get(api_v1_auth_sessions_path,headers:) }
-    let(:current_user){create(:user)}
-    let(:headers){current_user.create_new_auth_token}
+    subject { get(api_v1_auth_sessions_path, headers:) }
+
+    let(:current_user) { create(:user) }
+    let(:headers) { current_user.create_new_auth_token }
     context "正常なヘッダーを含めたとき" do
       it "正常にレコードを取得できる" do
         subject
-        res=JSON.parse(response.body)
-        expect(res.keys).to eq ["id","name","email"]
+        res = JSON.parse(response.body)
+        expect(res.keys).to eq ["id", "name", "email"]
         expect(response).to have_http_status(:ok)
       end
     end
+
     context "ヘッダー情報が空のままリクエストが送信された時" do
       let(:headers) { nil }
 
@@ -23,6 +25,5 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
         expect(response).to have_http_status(:unauthorized)
       end
     end
-
   end
 end

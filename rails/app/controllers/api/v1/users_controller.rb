@@ -1,11 +1,9 @@
 class Api::V1::UsersController < ApplicationController
   before_action :authenticate_api_v1_user!
 
-
-
   def show
-    user=User.find_by(uid: CGI.unescape(params[:id])+".com")
-    render json: user, serializer:CurrentUserSerializer  ,status: :ok
+    user = User.find_by(uid: "#{CGI.unescape(params[:id])}.com")
+    render json: user, serializer: CurrentUserSerializer, status: :ok
   end
 
   def update
@@ -17,15 +15,11 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-
-
   def following
-    followings=current_api_v1_user.following
-    followings_sleep=followings.map {|user| user.sleep}
-    render json: {followings:followings,followings_sleep:followings_sleep}, each_serializer: CurrentUserSerializer
+    followings = current_api_v1_user.following.includes(:sleep).order("sleeps.updated_at DESC")
+    followings_sleep = followings.map(&:sleep)
+    render json: { followings:, followings_sleep: }, each_serializer: CurrentUserSerializer
   end
-
-
 
   # def followers
   #   followers=current_api_v1_user.followers
@@ -33,9 +27,8 @@ class Api::V1::UsersController < ApplicationController
   # end
 
   private
-  def user_params
-    params.require(:user).permit(:id,:name,:email)
-  end
 
-
+    def user_params
+      params.require(:user).permit(:id, :name, :email)
+    end
 end

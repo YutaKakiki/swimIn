@@ -14,6 +14,10 @@ import {
 } from '@mui/material'
 
 import dayjs, { Dayjs } from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 import React, { useEffect, useState } from 'react'
 
@@ -52,7 +56,17 @@ const Friends: React.FC<PropsTypes> = ({
   friendSleep,
   setFriendSleep,
 }) => {
-  const [shortendComment, setShortendComment] = useState(userSleep.comment)
+  const [shortendComment, setShortendComment] = useState(
+    (userSleep && userSleep.comment) || '',
+  )
+  const formattedTargetWake = userSleep
+    ? dayjs.utc(dayjs(userSleep.targetWake)).tz('Asia/Tokyo').format('HH:mm')
+    : '未設定'
+
+  const formattedActualWake = userSleep
+    ? dayjs(userSleep.actualWake).format('HH:mm')
+    : '未設定'
+
   const handleSlideOpen = () => {
     setFriend(user)
     setFriendSleep({
@@ -69,8 +83,8 @@ const Friends: React.FC<PropsTypes> = ({
     : '#a3f0b7'
 
   useEffect(() => {
-    if (shortendComment.length > 1) {
-      setShortendComment(shortendComment.substring(0, 17) + '...')
+    if (shortendComment.length > 15) {
+      setShortendComment(shortendComment.substring(0, 15) + '...')
     } else {
       setShortendComment(shortendComment)
     }
@@ -128,10 +142,15 @@ const Friends: React.FC<PropsTypes> = ({
                             <Typography fontWeight={'bold'}>起床中</Typography>
                           </Box>
                           <Box sx={{ display: 'flex' }}>
-                            <ScheduleIcon sx={{ mr: '10px' }} />
-                            <Typography>
-                              {dayjs(userSleep.actualWake).format('HH:mm')}
-                            </Typography>
+                            <ScheduleIcon
+                              sx={{ mr: '10px' }}
+                              fontSize="small"
+                            />
+                            {userSleep.actualWake ? (
+                              <Typography>{formattedActualWake}</Typography>
+                            ) : (
+                              <Typography>未設定</Typography>
+                            )}
                           </Box>
                         </Box>
                       </>
@@ -144,7 +163,7 @@ const Friends: React.FC<PropsTypes> = ({
                             alignItems: 'center',
                           }}
                         >
-                          <ModeNightIcon sx={{ mr: '10px' }} />
+                          <ModeNightIcon sx={{ mr: '10px' }} fontSize="small" />
                           <Typography fontWeight={'bold'}>睡眠中</Typography>
                         </Box>
                         <Box
@@ -153,19 +172,48 @@ const Friends: React.FC<PropsTypes> = ({
                             alignItems: 'center',
                           }}
                         >
-                          <AccessAlarmIcon sx={{ mr: '10px' }} />
-                          <Typography sx={{ mt: '2px' }}>
-                            {dayjs(userSleep.targetWake).format('HH:mm')}
-                          </Typography>
+                          <AccessAlarmIcon
+                            sx={{ mr: '10px' }}
+                            fontSize="small"
+                          />
+                          {userSleep.targetWake ? (
+                            <Typography>{formattedTargetWake}</Typography>
+                          ) : (
+                            <Typography>未設定</Typography>
+                          )}
                         </Box>
                       </>
                     )}
                   </Box>
                 </>
               )}
+              {!userSleep && (
+                <>
+                  <Box width={100}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                      <Box
+                        sx={{
+                          color: '#f57e00',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <LightModeIcon sx={{ mr: '10px' }} fontSize="small" />
+                        <Typography fontWeight={'bold'}>起床中</Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <ScheduleIcon sx={{ mr: '10px' }} fontSize="small" />
+                        <Typography fontWeight={'bold'} fontSize={13}>
+                          未設定
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                </>
+              )}
               <Divider orientation="vertical" flexItem sx={{ mr: '10px' }} />
               {userSleep && (
-                <Typography color="text.primary" width={150} sx={{}}>
+                <Typography color="text.primary" width={145}>
                   {shortendComment}
                 </Typography>
               )}

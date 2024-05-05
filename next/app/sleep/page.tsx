@@ -1,8 +1,11 @@
 'use client'
 import { Box, Button, Card, Container, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import NoneStatus from '../components/sleep/NoneStatus'
 import SleepForm from '../components/sleep/SleepForm'
+import SleepStatistics from '../components/sleep/SleepStatistics'
 import SleepStatus from '../components/sleep/SleepStatus'
+import SleepingFriends from '../components/sleep/SleepingFriends'
 import WakeStatus from '../components/sleep/WakeStatus'
 import WakeForm from '../components/sleep/Wakeform'
 import { useSleepState } from '../hooks/useGrobalState'
@@ -24,7 +27,7 @@ const SleepPage = () => {
             <>
               {hide && (
                 <>
-                  {sleep.state == 'wake' ? (
+                  {sleep.state === 'wake' || sleep.state === 'none' ? (
                     <Box sx={{ mt: '150px' }}>
                       <SleepForm
                         zoom={zoom}
@@ -33,13 +36,15 @@ const SleepPage = () => {
                       />
                     </Box>
                   ) : (
-                    <Box sx={{ mt: '150px' }}>
-                      <WakeForm
-                        zoom={zoom}
-                        setZoom={setZoom}
-                        setHide={setHide}
-                      />
-                    </Box>
+                    sleep.state === 'sleep' && (
+                      <Box sx={{ mt: '150px' }}>
+                        <WakeForm
+                          zoom={zoom}
+                          setZoom={setZoom}
+                          setHide={setHide}
+                        />
+                      </Box>
+                    )
                   )}
                 </>
               )}
@@ -56,7 +61,7 @@ const SleepPage = () => {
                   >
                     <Box sx={{ mr: '3px' }}>
                       <Stack spacing={2}>
-                        {sleep.state == 'wake' ? (
+                        {sleep.state == 'wake' || sleep.state == 'none' ? (
                           <Card
                             sx={{
                               position: 'relative',
@@ -108,27 +113,15 @@ const SleepPage = () => {
 
                         {sleep.state == 'sleep' ? (
                           <SleepStatus />
-                        ) : (
+                        ) : sleep.state == 'wake' ? (
                           <WakeStatus />
+                        ) : (
+                          <NoneStatus />
                         )}
                       </Stack>
                     </Box>
                     <Box sx={{ ml: '10px' }}>
-                      <Card
-                        sx={{
-                          position: 'relative',
-                          height: '316px',
-                          width: '170px',
-                          bgcolor: '#c4daf2',
-                        }}
-                      >
-                        <Typography textAlign={'center'}>
-                          寝ている友達
-                        </Typography>
-                        <Typography textAlign={'center'}>リスト</Typography>
-                        <Typography textAlign={'center'}>リスト</Typography>
-                        <Typography textAlign={'center'}>リスト</Typography>
-                      </Card>
+                      <SleepingFriends />
                     </Box>
                   </Box>
                   <Box
@@ -137,22 +130,7 @@ const SleepPage = () => {
                       justifyContent: 'center',
                     }}
                   >
-                    <Card
-                      sx={{
-                        position: 'relative',
-                        height: '250px',
-                        width: '355px',
-                        mt: '15px',
-                        mb: '20px',
-                        bgcolor: '#d5e2f0',
-                      }}
-                    >
-                      <Stack spacing={4}>
-                        <Box sx={{ textAlign: 'center' }}>最近のステータス</Box>
-                        <Box sx={{ textAlign: 'center' }}>平均睡眠時間</Box>
-                        <Box sx={{ textAlign: 'center' }}>目標起床達成率</Box>
-                      </Stack>
-                    </Card>
+                    <SleepStatistics />
                   </Box>
                 </>
               )}

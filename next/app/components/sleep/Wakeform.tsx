@@ -31,7 +31,6 @@ const WakeForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
   useEffect(() => {
     setActualWake(dayjs())
   }, [])
-  console.log(actualWake)
 
   const sleepTime = dayjs().diff(sleep.bedtime, 'minute')
   const formattedSleepTime = duration(sleepTime, 'minute').format('HH時間mm分')

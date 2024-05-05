@@ -1,5 +1,9 @@
 'use client'
 import dayjs, { Dayjs } from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
+dayjs.extend(timezone)
 import useSWR from 'swr'
 
 type userStateType = {
@@ -47,7 +51,7 @@ export const useSnackbarState = () => {
 
 type userSleepType = {
   userId: number
-  state: 'wake' | 'sleep'
+  state: 'wake' | 'sleep' | 'none'
   targetWake: Dayjs
   actualWake: Dayjs
   bedtime: Dayjs
@@ -57,8 +61,9 @@ type userSleepType = {
 export const useSleepState = () => {
   const fallbackData: userSleepType = {
     userId: 0,
-    state: 'wake',
-    targetWake: dayjs(),
+    state: 'none',
+    // クライアントとサーバ間での時刻ずれハイドレーションエラーを防ぐ
+    targetWake: dayjs().utc().tz('Asia/Tokyo'),
     actualWake: dayjs(),
     bedtime: dayjs(),
     comment: '',
