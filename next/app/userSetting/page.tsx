@@ -9,7 +9,7 @@ import { useUserState } from '../hooks/useGrobalState'
 const SettingsPage = () => {
   const [user, setUser] = useUserState()
   const router = useRouter()
-  const handleClick = () => {
+  const handleClick = async () => {
     const res = confirm('本当に退会してよろしいですか？')
     if (res == true) {
       const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/auth'
@@ -26,7 +26,7 @@ const SettingsPage = () => {
         isSignIn: false,
         isFetched: false,
       }
-      axios
+      await axios
         .delete(url, { headers })
         .then(() => {
           setUser({

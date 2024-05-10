@@ -37,6 +37,11 @@ class User < ApplicationRecord
     sleep_time = (actual_wake - bedtime).to_i / 60
     diff_time = (actual_wake - target_wake).to_i / 60
 
-    self.calculated_times.create!(sleep_time:, diff_time:)
+    last_time=self.calculated_times.last
+    if last_time
+    last_time.update!(sleep_time:, diff_time:)
+    else
+      self.calculated_times.create!(sleep_time:,diff_time:)
+    end
   end
 end

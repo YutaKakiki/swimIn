@@ -41,12 +41,13 @@ const WeeklyChart: React.FC<PropsType> = ({ sleepTimeArr, diffTimeArr }) => {
     sleepTimeArr.unshift(0)
     diffTimeArr.unshift(0)
   }
-
+  // 現在の日時から７日取得する
   const reverseLabels: string[] = []
   for (let i: number = 0; i < 7; i++) {
     const date = dayjs().subtract(i, 'd').format('M/D')
     reverseLabels.push(date)
   }
+  // x軸の最後を現在の日時にしたいので、逆転する。
   const labels = reverseLabels.reverse()
 
   const data: ChartData<'bar' | 'line', number[], string> = {

@@ -99,7 +99,7 @@ const FriendsPage = () => {
     : sleepDefaultValue
 
   const { mutate } = useSWRConfig()
-  const handleUnfollow = () => {
+  const handleUnfollow = async () => {
     const headers = {
       'Content-Type': 'application/json',
       'access-token': localStorage.getItem('access-token'),
@@ -107,7 +107,7 @@ const FriendsPage = () => {
       uid: localStorage.getItem('uid'),
     }
     const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/relationships'
-    axios.delete(url, { headers, data: { id: friend.id } }).then(() => {
+    await axios.delete(url, { headers, data: { id: friend.id } }).then(() => {
       const revalidateUrl =
         process.env.NEXT_PUBLIC_API_BASE_URL + '/users/following'
       mutate(revalidateUrl)

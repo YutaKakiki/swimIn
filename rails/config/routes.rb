@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         collection do
           get :sleeping_friends
           get :return_times
+          get :forget_stamp_process
         end
       end
 

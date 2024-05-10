@@ -5,10 +5,11 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material'
+import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
 import dayjs, { extend } from 'dayjs'
 import duration from 'dayjs/plugin/duration'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import MonthlyChart from './MonthlyChart'
 import WeeklyChart from './WeeklyChart'
@@ -16,6 +17,20 @@ import fetcher from '@/app/util/fetcher'
 extend(duration)
 
 const SleepStatistics = () => {
+  useEffect(() => {
+    const forgetUrl =
+      process.env.NEXT_PUBLIC_API_BASE_URL + '/sleeps/forget_stamp_process'
+    const headers = {
+      'Content-Type': 'application/json',
+      'access-token': localStorage.getItem('access-token'),
+      client: localStorage.getItem('client'),
+      uid: localStorage.getItem('uid'),
+    }
+    const forgetStampProcess = async () => {
+      await axios.get(forgetUrl, { headers })
+    }
+    forgetStampProcess()
+  }, [])
   const [display, setDisplay] = useState('week')
   const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/sleeps/return_times'
   const { data } = useSWR(url, fetcher)

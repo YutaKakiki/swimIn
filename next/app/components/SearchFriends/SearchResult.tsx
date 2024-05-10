@@ -48,7 +48,7 @@ const SearchResult: React.FC<PropsTypes> = ({
     (user: FollowingUserType) => user.email,
   )
 
-  const handleFollow = () => {
+  const handleFollow = async () => {
     const data = targetUser
     const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/relationships'
     const headers = {
@@ -59,7 +59,7 @@ const SearchResult: React.FC<PropsTypes> = ({
     }
     const revalidateUrl =
       process.env.NEXT_PUBLIC_API_BASE_URL + '/users/following'
-    axios.post(url, data, { headers }).then(() => {
+    await axios.post(url, data, { headers }).then(() => {
       mutate(revalidateUrl)
       setOpen(false)
       router.push('/friends')
@@ -130,8 +130,8 @@ const SearchResult: React.FC<PropsTypes> = ({
         )}
         {targetUser.id == user.id && (
           <>
-            <Typography sx={{ textAlign: 'center' }}>
-              自分を追加することは できません
+            <Typography sx={{ textAlign: 'center', mt: '80px' }}>
+              自分を追加することはできません
             </Typography>
           </>
         )}

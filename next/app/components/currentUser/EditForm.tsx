@@ -43,7 +43,7 @@ const EditForm: React.FC<PropsTypes> = ({ openEdit, setOpenEdit }) => {
     resolver: yupResolver(editSchema),
   })
 
-  const onSubmit = (data: UpdateProfileDataType) => {
+  const onSubmit = async (data: UpdateProfileDataType) => {
     const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/users/' + user.id
     const headers = {
       'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const EditForm: React.FC<PropsTypes> = ({ openEdit, setOpenEdit }) => {
       uid: localStorage.getItem('uid'),
     }
 
-    axios
+    await axios
       .patch(url, data, { headers })
       .then((res) => {
         setUser({

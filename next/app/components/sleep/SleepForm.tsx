@@ -50,7 +50,7 @@ const SleepForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
   }
 
   const { mutate } = useSWRConfig()
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/sleeps'
     const headers = {
       'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ const SleepForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
       },
     }
     const snakeKeyData = snakecaseKeys(data)
-    axios
+    await axios
       .post(url, snakeKeyData, { headers })
       .then((res) => {
         setZoom(false)

@@ -36,16 +36,21 @@ type PropsType = {
 }
 
 const MonthlyChart: React.FC<PropsType> = ({ sleepTimeArr, diffTimeArr }) => {
-  console.log(sleepTimeArr)
-  console.log(diffTimeArr)
   const start = dayjs().startOf('month')
   const daysInMonth = dayjs().daysInMonth()
+  console.log(start)
   const labels = []
   for (let i = 0; i < daysInMonth; i++) {
     const date = start.add(i, 'd').format('M/D')
     labels.push(date)
   }
-
+  //   新規ユーザの場合、月の初めから当日までデータがなければ、０を追加する
+  const dateCountUntilToday = dayjs().diff(start, 'day') + 1
+  console.log(dateCountUntilToday)
+  while (sleepTimeArr.length < dateCountUntilToday) {
+    sleepTimeArr.unshift(0)
+    diffTimeArr.unshift(0)
+  }
   const data: ChartData<'bar' | 'line', number[], string> = {
     labels,
     datasets: [

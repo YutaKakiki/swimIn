@@ -45,7 +45,7 @@ const WakeForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
   }
 
   const { mutate } = useSWRConfig()
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/sleeps/' + user.id
     const headers = {
       'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const WakeForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
       sleep: { actualWake: actualWake.format(), comment: comment },
     }
     const snakeKeyData = snakecaseKeys(data)
-    axios
+    await axios
       .patch(url, snakeKeyData, { headers })
       .then((res) => {
         setZoom(false)
