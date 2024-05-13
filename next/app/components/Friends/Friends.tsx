@@ -1,7 +1,9 @@
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import ModeNightIcon from '@mui/icons-material/ModeNight'
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant'
 import ScheduleIcon from '@mui/icons-material/Schedule'
+
 import {
   Avatar,
   Box,
@@ -25,8 +27,8 @@ import { FriendsProf } from './FriendsProf'
 
 type FriendSleepType = {
   targetWake: Dayjs
-  actualWake: Dayjs
-  state: 'wake' | 'sleep'
+  actualWake: Dayjs | null
+  state: 'wake' | 'sleep' | 'none'
   bedtime: Dayjs
   comment: string
 }
@@ -89,6 +91,11 @@ const Friends: React.FC<PropsTypes> = ({
       setShortendComment(shortendComment)
     }
   }, [])
+  const isOverSleeping =
+    userSleep &&
+    dayjs().isAfter(dayjs(userSleep.targetWake)) &&
+    userSleep.actualWake == null
+
   return (
     <>
       {show && (
@@ -96,25 +103,38 @@ const Friends: React.FC<PropsTypes> = ({
           alignItems="flex-start"
           sx={{
             bgcolor: stateColor,
-            mt: '-13px',
+            mt: '-10px',
             borderRadius: '4px',
             mb: '5px',
             width: '100%',
           }}
         >
-          <ListItemAvatar sx={{ mt: '-9px' }}>
+          <ListItemAvatar sx={{ mt: '-18px' }}>
             <FormControlLabel
               label=""
               control={
-                <IconButton onClick={handleSlideOpen} sx={{ ml: '3px' }}>
-                  <Avatar>
-                    <FriendsProf height={40} width={40} otherUser={user} />
-                  </Avatar>
+                <IconButton onClick={handleSlideOpen}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <FriendsProf height={40} width={40} otherUser={user} />
+                    </Avatar>
+                    {isOverSleeping && (
+                      <NotificationImportantIcon
+                        fontSize="large"
+                        sx={{
+                          pt: '4px',
+                          mb: '-18px',
+                          ml: '-17px',
+                          color: '#fa5e52',
+                        }}
+                      />
+                    )}
+                  </ListItemAvatar>
                 </IconButton>
               }
             />
           </ListItemAvatar>
-          <Box sx={{ ml: '-8px' }}>
+          <Box sx={{ ml: '-20px' }}>
             <Typography sx={{ fontWeight: 'bold' }}>{user.name}</Typography>
             <Box
               sx={{
@@ -141,15 +161,19 @@ const Friends: React.FC<PropsTypes> = ({
                             />
                             <Typography fontWeight={'bold'}>起床中</Typography>
                           </Box>
-                          <Box sx={{ display: 'flex' }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             <ScheduleIcon
                               sx={{ mr: '10px' }}
                               fontSize="small"
                             />
                             {userSleep.actualWake ? (
-                              <Typography>{formattedActualWake}</Typography>
+                              <Typography fontWeight={'bold'}>
+                                {formattedActualWake}
+                              </Typography>
                             ) : (
-                              <Typography>未設定</Typography>
+                              <Typography fontWeight={'bold'}>
+                                未設定
+                              </Typography>
                             )}
                           </Box>
                         </Box>
@@ -177,9 +201,11 @@ const Friends: React.FC<PropsTypes> = ({
                             fontSize="small"
                           />
                           {userSleep.targetWake ? (
-                            <Typography>{formattedTargetWake}</Typography>
+                            <Typography fontWeight={'bold'}>
+                              {formattedTargetWake}
+                            </Typography>
                           ) : (
-                            <Typography>未設定</Typography>
+                            <Typography fontWeight={'bold'}>未設定</Typography>
                           )}
                         </Box>
                       </>
@@ -203,9 +229,7 @@ const Friends: React.FC<PropsTypes> = ({
                       </Box>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <ScheduleIcon sx={{ mr: '10px' }} fontSize="small" />
-                        <Typography fontWeight={'bold'} fontSize={13}>
-                          未設定
-                        </Typography>
+                        <Typography fontWeight={'bold'}>未設定</Typography>
                       </Box>
                     </Box>
                   </Box>

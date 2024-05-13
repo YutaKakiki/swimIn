@@ -91,12 +91,41 @@ const WakeForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Stack>
-              <Typography sx={{ mb: '30px', textAlign: 'center' }}>
+              <Typography
+                sx={{
+                  mb: '30px',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  color: '#fa5807',
+                  fontSize: '20px',
+                }}
+              >
                 おはようございます！
               </Typography>
 
-              <Typography>今回の睡眠時間は</Typography>
-              <Typography>{formattedSleepTime}でした</Typography>
+              <Typography
+                sx={{
+                  borderRadius: '8px',
+                  border: '1px',
+                  width: '115px',
+                  p: 0.3,
+                  textAlign: 'center',
+                  bgcolor: '#00bf06',
+                  color: 'white',
+                }}
+              >
+                今回の睡眠時間
+              </Typography>
+              <Typography
+                fontSize={30}
+                sx={{
+                  borderBottom: '1px solid',
+                  width: '180px',
+                  mt: '10px',
+                }}
+              >
+                {formattedSleepTime}
+              </Typography>
 
               <Box sx={{ m: '0 auto', mt: '30px' }}>
                 <Typography textAlign={'center'} mb={'5px'}>
@@ -108,7 +137,11 @@ const WakeForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
                   onChange={changeComment}
                 />
               </Box>
-              <Button onClick={handleSubmit} sx={{ mt: '20px' }} color="info">
+              <Button
+                onClick={handleSubmit}
+                sx={{ mt: '40px', fontWeight: 'bold', width: '200px' }}
+                color="info"
+              >
                 おはよう！
               </Button>
             </Stack>

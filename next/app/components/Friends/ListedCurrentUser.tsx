@@ -1,6 +1,7 @@
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import ModeNightIcon from '@mui/icons-material/ModeNight'
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant'
 import ScheduleIcon from '@mui/icons-material/Schedule'
 import {
   Avatar,
@@ -42,7 +43,9 @@ const ListedCurrentUser = () => {
     .utc(dayjs(sleep.targetWake))
     .tz('Asia/Tokyo')
     .format('HH:mm')
-  const formattedActualWake = dayjs(sleep.targetWake).format('HH:mm')
+  const formattedActualWake = dayjs(sleep.actualWake).format('HH:mm')
+  const isOverSleeping =
+    dayjs().isAfter(dayjs(sleep.targetWake)) && sleep.actualWake == null
 
   return (
     <>
@@ -61,6 +64,12 @@ const ListedCurrentUser = () => {
             <Avatar>
               <CurrentUserProf height={40} width={40} />
             </Avatar>
+            {isOverSleeping && (
+              <NotificationImportantIcon
+                fontSize="large"
+                sx={{ pt: '5px', ml: '2px', color: '#fa5e52' }}
+              />
+            )}
           </ListItemAvatar>
           <Box sx={{ mt: '-1px' }}>
             <Typography sx={{ fontWeight: 'bold' }}>あなた</Typography>
@@ -85,9 +94,11 @@ const ListedCurrentUser = () => {
                           <LightModeIcon sx={{ mr: '10px' }} fontSize="small" />
                           <Typography fontWeight={'bold'}>起床中</Typography>
                         </Box>
-                        <Box sx={{ display: 'flex' }}>
-                          <ScheduleIcon sx={{ mr: '10px' }} />
-                          <Typography>{formattedTargetWake}</Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <ScheduleIcon sx={{ mr: '10px' }} fontSize="small" />
+                          <Typography fontWeight={'bold'}>
+                            {formattedActualWake}
+                          </Typography>
                         </Box>
                       </Box>
                     </>
@@ -100,7 +111,7 @@ const ListedCurrentUser = () => {
                           alignItems: 'center',
                         }}
                       >
-                        <ModeNightIcon sx={{ mr: '10px' }} />
+                        <ModeNightIcon sx={{ mr: '10px' }} fontSize="small" />
                         <Typography fontWeight={'bold'}>睡眠中</Typography>
                       </Box>
                       <Box
@@ -109,9 +120,9 @@ const ListedCurrentUser = () => {
                           alignItems: 'center',
                         }}
                       >
-                        <AccessAlarmIcon sx={{ mr: '10px' }} />
-                        <Typography sx={{ mt: '2px' }}>
-                          {formattedActualWake}
+                        <AccessAlarmIcon sx={{ mr: '10px' }} fontSize="small" />
+                        <Typography sx={{ mt: '2px' }} fontWeight={'bold'}>
+                          {formattedTargetWake}
                         </Typography>
                       </Box>
                     </>

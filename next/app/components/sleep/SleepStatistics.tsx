@@ -81,7 +81,11 @@ const SleepStatistics = () => {
       {data && (
         <>
           <Box>
-            <Typography textAlign={'center'} fontWeight={'bold'}>
+            <Typography
+              textAlign={'center'}
+              fontWeight={'bold'}
+              sx={{ mt: '3px' }}
+            >
               あなたの睡眠履歴
             </Typography>
             <Box>
@@ -110,9 +114,32 @@ const SleepStatistics = () => {
           <Box sx={{ mt: '5px' }}>
             {display == 'week' && (
               <>
-                <Typography sx={{ mb: '10px' }}>
-                  平均睡眠時間: {weeklySleepAverage}
-                </Typography>
+                <Box sx={{ ml: '10px' }}>
+                  <Typography
+                    sx={{
+                      mb: '10px',
+                      border: '1px',
+                      borderRadius: '20px',
+                      bgcolor: '#202b6b',
+                      color: 'white',
+                      p: '1px',
+                      textAlign: 'center',
+                      width: '100px',
+                    }}
+                  >
+                    週平均
+                  </Typography>
+                  <Typography
+                    sx={{
+                      ml: '14px',
+                      fontSize: '22px',
+                      borderBottom: '1px solid',
+                      width: '120px',
+                    }}
+                  >
+                    {weeklySleepAverage}
+                  </Typography>
+                </Box>
 
                 <WeeklyChart
                   sleepTimeArr={weeklySleepTimeArr}
@@ -122,9 +149,32 @@ const SleepStatistics = () => {
             )}
             {display == 'month' && (
               <>
-                <Typography sx={{ mb: '10px' }}>
-                  平均睡眠時間: {monthlySleepAverage}
-                </Typography>
+                <Box sx={{ ml: '10px' }}>
+                  <Typography
+                    sx={{
+                      mb: '10px',
+                      border: '1px',
+                      borderRadius: '20px',
+                      bgcolor: '#202b6b',
+                      color: 'white',
+                      p: '1px',
+                      textAlign: 'center',
+                      width: '100px',
+                    }}
+                  >
+                    週平均
+                  </Typography>
+                  <Typography
+                    sx={{
+                      ml: '14px',
+                      fontSize: '22px',
+                      borderBottom: '1px solid',
+                      width: '120px',
+                    }}
+                  >
+                    {monthlySleepAverage}
+                  </Typography>
+                </Box>
                 <MonthlyChart
                   sleepTimeArr={monthlySleepTimeArr}
                   diffTimeArr={monthlyDiffTimeArr}

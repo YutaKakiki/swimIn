@@ -1,4 +1,6 @@
 'use client'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import ModeNightIcon from '@mui/icons-material/ModeNight'
 import { Box, Button, Card, Container, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import NoneStatus from '../components/sleep/NoneStatus'
@@ -61,6 +63,13 @@ const SleepPage = () => {
                   >
                     <Box sx={{ mr: '3px' }}>
                       <Stack spacing={2}>
+                        {sleep.state == 'sleep' ? (
+                          <SleepStatus />
+                        ) : sleep.state == 'wake' ? (
+                          <WakeStatus />
+                        ) : (
+                          <NoneStatus />
+                        )}
                         {sleep.state == 'wake' || sleep.state == 'none' ? (
                           <Card
                             sx={{
@@ -70,17 +79,30 @@ const SleepPage = () => {
                               bgcolor: '#adc5f7',
                             }}
                           >
-                            <Stack spacing={4}>
+                            <Stack spacing={3}>
                               <Box>
                                 <Typography
                                   textAlign={'center'}
-                                  sx={{ mt: '30px' }}
+                                  fontWeight={'bold'}
+                                  sx={{
+                                    mt: '30px',
+                                  }}
                                 >
                                   おやすみで繋がろう
                                 </Typography>
                               </Box>
-                              <Box sx={{ textAlign: 'center' }}>
-                                <Button onClick={handleZoomIn}>寝る</Button>
+                              <Box>
+                                <Button
+                                  onClick={handleZoomIn}
+                                  sx={{ display: 'flex', m: '0 auto', p: 1 }}
+                                >
+                                  <ModeNightIcon fontSize="small" />
+                                  <Typography
+                                    sx={{ ml: '5px', fontWeight: 'bold' }}
+                                  >
+                                    寝る
+                                  </Typography>
+                                </Button>
                               </Box>
                             </Stack>
                           </Card>
@@ -90,33 +112,42 @@ const SleepPage = () => {
                               position: 'relative',
                               height: '150px',
                               width: '170px',
-                              bgcolor: '#a3f0b7',
+                              bgcolor: '#b9edc7',
                             }}
                           >
-                            <Stack spacing={4}>
+                            <Stack spacing={3}>
                               <Box>
                                 <Typography
                                   textAlign={'center'}
-                                  sx={{ mt: '30px' }}
+                                  fontWeight={'bold'}
+                                  sx={{ mt: '30px', color: '#fa5807' }}
                                 >
                                   おはようを伝えよう
                                 </Typography>
                               </Box>
                               <Box sx={{ textAlign: 'center' }}>
-                                <Button color="info" onClick={handleZoomIn}>
-                                  起きる
+                                <Button
+                                  color="info"
+                                  onClick={handleZoomIn}
+                                  sx={{ display: 'flex', m: '0 auto', p: 1 }}
+                                >
+                                  <LightModeIcon
+                                    fontSize="small"
+                                    sx={{ color: 'white' }}
+                                  />
+                                  <Typography
+                                    sx={{
+                                      color: 'white',
+                                      ml: '5px',
+                                      fontWeight: 'bold',
+                                    }}
+                                  >
+                                    起きる
+                                  </Typography>
                                 </Button>
                               </Box>
                             </Stack>
                           </Card>
-                        )}
-
-                        {sleep.state == 'sleep' ? (
-                          <SleepStatus />
-                        ) : sleep.state == 'wake' ? (
-                          <WakeStatus />
-                        ) : (
-                          <NoneStatus />
                         )}
                       </Stack>
                     </Box>

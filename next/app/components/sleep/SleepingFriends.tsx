@@ -1,5 +1,7 @@
+import PeopleIcon from '@mui/icons-material/People'
 import {
   Avatar,
+  Box,
   Card,
   Divider,
   List,
@@ -8,7 +10,6 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material'
-
 import React from 'react'
 import useSWR from 'swr'
 import { FriendsProf } from '../friends/FriendsProf'
@@ -34,9 +35,24 @@ const SleepingFriends = () => {
         overflow: 'auto',
       }}
     >
-      <Typography sx={{ textAlign: 'center', mb: '10px', mt: '10px' }}>
-        睡眠中の友達
-      </Typography>
+      <Box
+        sx={{
+          p: '2px',
+          m: ' 0 auto',
+          mt: '10px',
+          width: '100px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          border: '1px solid',
+          color: '#020b38',
+          borderRadius: '20px',
+          borderColor: '#001e43',
+        }}
+      >
+        <PeopleIcon sx={{ mr: '5px' }} />
+        <Typography sx={{ fontWeight: 'bold' }}>睡眠中</Typography>
+      </Box>
       <List>
         {data &&
           data.map((user: FriendType) => (
@@ -61,7 +77,7 @@ const SleepingFriends = () => {
           <Typography
             sx={{ textAlign: 'center', fontSize: '15px', mt: '50px' }}
           >
-            睡眠中の友達はいません
+            誰も寝ていません
           </Typography>
         )}
       </List>

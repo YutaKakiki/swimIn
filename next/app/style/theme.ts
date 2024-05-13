@@ -10,9 +10,8 @@ const theme = createTheme({
       main: '#fafafa',
     },
     info: {
-      main: '#00a349',
+      main: '#00ad28',
     },
-
     error: {
       main: red.A400,
     },
@@ -21,6 +20,19 @@ const theme = createTheme({
     MuiButton: {
       defaultProps: {
         variant: 'contained',
+      },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: '#001e43',
+          color: 'whitesmoke',
+          fontWeight: 'bold',
+          fontSize: '16px',
+        },
+        arrow: {
+          color: '#001e43',
+        },
       },
     },
   },

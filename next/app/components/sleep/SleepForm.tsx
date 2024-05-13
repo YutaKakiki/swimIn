@@ -41,7 +41,7 @@ const SleepForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
   }
   const changeTime = (value: Dayjs | null) => {
     if (value) {
-      setTargetWake(value.add(1, 'day'))
+      setTargetWake(value)
     }
   }
   const changeComment: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
@@ -82,7 +82,6 @@ const SleepForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
       })
       .catch((err) => console.log(err))
   }
-
   return (
     <Box>
       <Zoom in={zoom} mountOnEnter unmountOnExit timeout={300}>
@@ -90,7 +89,7 @@ const SleepForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
           sx={{
             m: '0 auto',
             width: '330px',
-            height: '500px',
+            height: '530px',
           }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -100,7 +99,9 @@ const SleepForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Stack>
-              <Typography sx={{ mb: '30px' }}>
+              <Typography
+                sx={{ mb: '30px', color: '#001e43', fontWeight: 'bold' }}
+              >
                 明日の起床目標時刻を決めましょう
               </Typography>
               <LocalizationProvider
@@ -117,14 +118,33 @@ const SleepForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
                   onChange={changeTime}
                 />
               </LocalizationProvider>
-              <Box sx={{ mt: '15px' }}>
-                <Typography sx={{ fontWeight: 'bold' }}>
+              <Box sx={{ mt: '25px' }}>
+                <Typography
+                  sx={{
+                    borderRadius: '8px',
+                    border: '1px',
+                    width: '115px',
+                    p: 0.3,
+                    textAlign: 'center',
+                    bgcolor: '#4d7bf7',
+                    color: 'white',
+                  }}
+                >
                   睡眠時間(予定)
                 </Typography>
-                <Typography>{formattedSleepTime}</Typography>
+                <Typography
+                  fontSize={30}
+                  sx={{
+                    borderBottom: '1px solid',
+                    width: '180px',
+                    mt: '10px',
+                  }}
+                >
+                  {formattedSleepTime}
+                </Typography>
               </Box>
 
-              <Box sx={{ m: '0 auto', mt: '7px' }}>
+              <Box sx={{ m: '0 auto', mt: '25px' }}>
                 <Typography textAlign={'center'} mb={'5px'}>
                   コメントを残す
                 </Typography>
@@ -134,7 +154,15 @@ const SleepForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
                   onChange={changeComment}
                 />
               </Box>
-              <Button sx={{ mt: '40px' }} onClick={handleSubmit}>
+              <Button
+                sx={{
+                  fontWeight: 'bold',
+                  width: '200px',
+                  m: '0 auto',
+                  mt: '30px',
+                }}
+                onClick={handleSubmit}
+              >
                 おやすみなさい
               </Button>
             </Stack>

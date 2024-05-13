@@ -17,10 +17,10 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <ThemeProvider theme={theme}>
-        <body style={{ backgroundColor: '#e1ebf5' }}>
+        <body style={{ backgroundColor: '#e1ebf5', fontFamily: 'sans-serif' }}>
           <Header />
           <PutSnackbar />
-          <Box sx={{ mt: '120px', pb: '100px' }}>{children}</Box>
+          <Box sx={{ mt: '130px', mb: '150px' }}>{children}</Box>
           <CurrentUser />
           <CurrentUserSleepState />
           <Footer />

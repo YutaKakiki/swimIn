@@ -1,7 +1,15 @@
 'use client'
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import HistoryIcon from '@mui/icons-material/History'
+import HotelIcon from '@mui/icons-material/Hotel'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import ModeNightIcon from '@mui/icons-material/ModeNight'
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
 import PersonSearchIcon from '@mui/icons-material/PersonSearch'
+import UpdateDisabledIcon from '@mui/icons-material/UpdateDisabled'
+
 import {
   Avatar,
   Box,
@@ -12,6 +20,7 @@ import {
   List,
   Modal,
   Slide,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import axios from 'axios'
@@ -34,8 +43,8 @@ type FriendsType = {
 }
 type FriendSleepType = {
   targetWake: Dayjs
-  actualWake: Dayjs
-  state: 'wake' | 'sleep'
+  actualWake: Dayjs | null
+  state: 'wake' | 'sleep' | 'none'
   bedtime: Dayjs
   comment: string
 }
@@ -47,8 +56,8 @@ const FriendsPage = () => {
   }
   const sleepDefaultValue: FriendSleepType = {
     targetWake: dayjs(),
-    actualWake: dayjs(),
-    state: 'wake',
+    actualWake: null,
+    state: 'none',
     bedtime: dayjs(),
     comment: '（コメントなし）',
   }
@@ -89,6 +98,7 @@ const FriendsPage = () => {
   const handleSlideClose = () => {
     setTimeout(() => setShow(true), 390)
     setSlide(false)
+    setTimeout(() => setFriendSleep(sleepDefaultValue), 500)
   }
 
   const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/users/following'
@@ -184,7 +194,7 @@ const FriendsPage = () => {
                   height: { xs: '600px' },
                   margin: '0 auto',
                   position: 'relative',
-                  bgcolor: '#f8f8ff',
+                  bgcolor: 'whitesmoke',
                 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -213,103 +223,267 @@ const FriendsPage = () => {
                   >
                     <FriendsProf otherUser={friend} width={80} height={80} />
                   </Avatar>
-                  <Typography sx={{ pt: '20px', textAlign: 'center' }}>
-                    {friend.name}
-                  </Typography>
-                  {friendSleep.state == 'wake' ? (
-                    <Typography sx={{ pt: '20px', textAlign: 'center' }}>
-                      起床中
-                    </Typography>
-                  ) : (
-                    <Typography sx={{ pt: '20px', textAlign: 'center' }}>
-                      睡眠中
-                    </Typography>
-                  )}
-
-                  {friendSleep.state == 'wake' ? (
-                    <>
-                      <Typography sx={{ pt: '20px', textAlign: 'center' }}>
-                        本日の起床時間
-                      </Typography>
-                      <Typography sx={{ textAlign: 'center' }}>
-                        {dayjs(friendSleep.actualWake).format('HH時mm分')}
-                      </Typography>
-                      <Typography sx={{ pt: '20px', textAlign: 'center' }}>
-                        睡眠時間
-                      </Typography>
-                      <Typography sx={{ textAlign: 'center' }}>
-                        {formattedSleepTime}
-                      </Typography>
-
-                      {diffTime <= 0 ? (
-                        diffTime == 0 ? (
-                          <>
-                            <Typography
-                              sx={{ pt: '20px', textAlign: 'center' }}
-                            >
-                              目標時刻ぴったりに起床しました！
-                            </Typography>
-                          </>
-                        ) : (
-                          <>
-                            <Typography
-                              sx={{ pt: '20px', textAlign: 'center' }}
-                            >
-                              予定時刻よりも
-                            </Typography>
-                            <Typography
-                              sx={{ pt: '20px', textAlign: 'center' }}
-                            >
-                              {formattedAbsDiffTime}早く起床しました
-                            </Typography>
-                          </>
-                        )
-                      ) : (
-                        <>
-                          <Typography sx={{ pt: '20px', textAlign: 'center' }}>
-                            目標時刻よりも
-                          </Typography>
-                          <Typography sx={{ pt: '20px', textAlign: 'center' }}>
-                            {formattedAbsDiffTime}寝坊しました・・・
-                          </Typography>
-                        </>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <Typography sx={{ pt: '20px', textAlign: 'center' }}>
-                        就寝時刻
-                      </Typography>
-                      <Typography sx={{ textAlign: 'center' }}>
-                        {dayjs(friendSleep.bedtime).format('HH時mm分')}
-                      </Typography>
-                      <Typography sx={{ pt: '20px', textAlign: 'center' }}>
-                        目標起床時刻
-                      </Typography>
-                      <Typography
-                        sx={{
-                          textAlign: 'center',
-                        }}
-                      >
-                        {dayjs(friendSleep.targetWake).format('HH時mm分')}
-                      </Typography>
-                    </>
-                  )}
                   <Typography
                     sx={{
-                      mt: '20px',
-                      width: '300px',
-                      height: '80px',
-                      textAlign: 'left',
-                      pl: '13px',
-                      pt: '10px',
-                      border: '1px solid',
-                      borderColor: 'black',
-                      borderRadius: '10px',
+                      pt: '20px',
+                      textAlign: 'center',
+                      fontWeight: 'bold',
+                      fontSize: '20px',
                     }}
                   >
-                    {friendSleep.comment}
+                    {friend.name}
                   </Typography>
+                  {friendSleep.state == 'none' && (
+                    <>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          flexDirection: 'column',
+                          mt: '50px',
+                        }}
+                      >
+                        <UpdateDisabledIcon
+                          sx={{
+                            mb: '30px',
+                            fontSize: '60px',
+                            color: '#a9a9a9',
+                          }}
+                        />
+                        <Typography fontWeight={'bold'} color={'#a9a9a9'}>
+                          情報がありません
+                        </Typography>
+                      </Box>
+                    </>
+                  )}
+                  {friendSleep.state != 'none' && (
+                    <>
+                      <Box sx={{ mt: '20px' }}>
+                        {friendSleep.state == 'wake' ? (
+                          <Box
+                            sx={{
+                              color: '#f57e00',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <LightModeIcon
+                              sx={{ mr: '2px', fontSize: '25px' }}
+                            />
+                            <Typography
+                              fontWeight={'bold'}
+                              sx={{ fontSize: '20px' }}
+                            >
+                              起床中
+                            </Typography>
+                          </Box>
+                        ) : (
+                          <Box
+                            sx={{
+                              color: '#04206b',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <ModeNightIcon
+                              sx={{ mr: 'px', fontSize: '25px' }}
+                            />
+                            <Typography
+                              fontWeight={'bold'}
+                              sx={{ fontSize: '20px' }}
+                            >
+                              睡眠中
+                            </Typography>
+                          </Box>
+                        )}
+                      </Box>
+
+                      {friendSleep.state == 'wake' ? (
+                        <>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              pb: '2px',
+                              mt: '30px',
+                            }}
+                          >
+                            <Tooltip
+                              title={'起床時刻'}
+                              arrow
+                              enterTouchDelay={0}
+                            >
+                              <AccessTimeIcon fontSize="large" />
+                            </Tooltip>
+                            <Typography
+                              sx={{ fontWeight: 'bold' }}
+                              fontSize={23}
+                            >
+                              {dayjs(friendSleep.actualWake).format('HH:mm')}
+                            </Typography>
+                          </Box>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              mt: '10px',
+                            }}
+                          >
+                            <Tooltip
+                              arrow
+                              title={'直近の睡眠時間'}
+                              enterTouchDelay={0}
+                            >
+                              <HistoryIcon fontSize="large" />
+                            </Tooltip>
+                            <Typography
+                              sx={{ fontWeight: 'bold' }}
+                              fontSize={23}
+                            >
+                              {formattedSleepTime}
+                            </Typography>
+                          </Box>
+                          <Box
+                            sx={{
+                              mt: '20px',
+                              display: 'flex',
+                              justifyContent: 'center',
+                            }}
+                          >
+                            {diffTime >= 0 ? (
+                              diffTime === 0 ? (
+                                <Typography
+                                  sx={{
+                                    textAlign: 'center',
+                                    fontSize: '20px',
+                                    border: '1px ',
+                                    borderRadius: '30px',
+                                    p: '5px',
+                                    width: '180px',
+                                    bgcolor: '#00b02e',
+                                    color: 'white',
+
+                                    mb: '10px',
+                                  }}
+                                >
+                                  目標ぴったりに起床!
+                                </Typography>
+                              ) : (
+                                <Typography
+                                  sx={{
+                                    textAlign: 'center',
+                                    fontSize: '20px',
+                                    border: '1px ',
+                                    borderRadius: '30px',
+                                    p: '5px',
+                                    width: '180px',
+                                    bgcolor: '#f55361',
+                                    color: 'white',
+
+                                    mb: '10px',
+                                  }}
+                                >
+                                  {formattedAbsDiffTime} 寝坊...
+                                </Typography>
+                              )
+                            ) : (
+                              <Typography
+                                sx={{
+                                  textAlign: 'center',
+                                  fontSize: '20px',
+                                  border: '1px ',
+                                  borderRadius: '30px',
+                                  p: '5px',
+                                  width: '180px',
+                                  bgcolor: '#1b84f5',
+                                  color: 'white',
+
+                                  mb: '10px',
+                                }}
+                              >
+                                {formattedAbsDiffTime} 早起き!
+                              </Typography>
+                            )}
+                          </Box>
+                        </>
+                      ) : (
+                        <>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              mt: '30px',
+                            }}
+                          >
+                            <Tooltip
+                              title={'目標起床時刻'}
+                              arrow
+                              enterTouchDelay={0}
+                            >
+                              <AccessAlarmIcon
+                                fontSize="large"
+                                sx={{ mt: '-3px' }}
+                              />
+                            </Tooltip>
+                            <Typography
+                              textAlign={'center'}
+                              fontWeight={'bold'}
+                              fontSize={23}
+                              sx={{ ml: '10px' }}
+                            >
+                              {dayjs(friendSleep.targetWake).format('HH:mm')}
+                            </Typography>
+                          </Box>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              mt: '15px',
+                            }}
+                          >
+                            <Tooltip
+                              title={'就寝時刻'}
+                              arrow
+                              enterTouchDelay={0}
+                            >
+                              <HotelIcon fontSize="large" sx={{ mt: '-3px' }} />
+                            </Tooltip>
+                            <Typography
+                              textAlign={'center'}
+                              fontWeight={'bold'}
+                              fontSize={23}
+                              sx={{ ml: '10px' }}
+                            >
+                              {dayjs(friendSleep.bedtime).format('HH:mm')}
+                            </Typography>
+                          </Box>
+                        </>
+                      )}
+                      <Typography
+                        sx={{
+                          mt: '20px',
+                          width: '300px',
+                          height: '80px',
+                          textAlign: 'left',
+                          pl: '13px',
+                          pr: '13px',
+                          pt: '10px',
+                          border: '1px solid',
+                          borderColor: 'black',
+                          borderRadius: '10px',
+                        }}
+                      >
+                        {friendSleep.comment}
+                      </Typography>
+                    </>
+                  )}
                 </Box>
                 <Box sx={{ top: '530px', right: '5px', position: 'absolute' }}>
                   <Button
