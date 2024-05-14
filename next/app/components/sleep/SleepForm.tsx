@@ -32,9 +32,11 @@ const SleepForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
   const [targetWake, setTargetWake] = useState(dayjs())
   const [comment, setComment] = useState('')
   const estimatedSleepTime = targetWake.diff(dayjs(), 'minute')
-  const formattedSleepTime = dayjs
-    .duration(estimatedSleepTime, 'minute')
-    .format('HH時間mm分')
+  const absEstimatedSleepTime = dayjs.duration(
+    Math.abs(estimatedSleepTime),
+    'minute',
+  )
+  const formattedSleepTime = absEstimatedSleepTime.format('HH時間mm分')
   const handleZoomClose = () => {
     setZoom(false)
     setTimeout(() => setHide(false), 279)

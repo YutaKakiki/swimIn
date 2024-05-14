@@ -54,13 +54,6 @@ const WeeklyChart: React.FC<PropsType> = ({ sleepTimeArr, diffTimeArr }) => {
     labels,
     datasets: [
       {
-        type: 'bar',
-        label: '睡眠時間',
-        data: sleepTimeArr,
-        backgroundColor: '#1a81ff',
-        yAxisID: 'y1',
-      },
-      {
         type: 'line',
         label: '目標起床時刻との差',
         borderWidth: 2,
@@ -68,6 +61,13 @@ const WeeklyChart: React.FC<PropsType> = ({ sleepTimeArr, diffTimeArr }) => {
         borderColor: '#0ee327',
         data: diffTimeArr,
         yAxisID: 'y2',
+      },
+      {
+        type: 'bar',
+        label: '睡眠時間',
+        data: sleepTimeArr,
+        backgroundColor: '#1a81ff',
+        yAxisID: 'y1',
       },
     ],
   }
@@ -84,7 +84,6 @@ const WeeklyChart: React.FC<PropsType> = ({ sleepTimeArr, diffTimeArr }) => {
                   .duration(context.parsed.y * 60, 'minute')
                   .format('HH:mm')
               }
-            } else if (context.datasetIndex === 1) {
               //目標時刻との差
               const absDiffTime = dayjs.duration(
                 Math.abs(context.parsed.y * 60),
@@ -100,6 +99,13 @@ const WeeklyChart: React.FC<PropsType> = ({ sleepTimeArr, diffTimeArr }) => {
                 label = `${formattedAbsDiffTime}早く起床`
               } else {
                 label = `${formattedAbsDiffTime}寝坊`
+              }
+            } else if (context.datasetIndex === 1) {
+              // 睡眠時間
+              if (context.parsed.y) {
+                label = dayjs
+                  .duration(context.parsed.y * 60, 'minute')
+                  .format('HH時間mm分')
               }
             }
             return label

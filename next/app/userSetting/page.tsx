@@ -44,12 +44,23 @@ const SettingsPage = () => {
   return (
     <Box>
       <Container maxWidth="xl">
-        <Typography sx={{ textAlign: 'right', fontSize: '20px', mb: '10px' }}>
+        <Typography
+          sx={{
+            fontSize: '20px',
+            mb: '10px',
+            textAlign: 'center',
+            fontWeight: 'bold',
+          }}
+        >
           SwimInから退会する
         </Typography>
-        <Box sx={{ display: 'center', justifyContent: 'flex-end' }}>
-          <Button onClick={handleClick} variant="outlined">
-            削除
+        <Box sx={{ display: 'flex' }}>
+          <Button
+            onClick={handleClick}
+            variant="outlined"
+            sx={{ m: '0 auto', width: '150px' }}
+          >
+            退会
           </Button>
         </Box>
       </Container>

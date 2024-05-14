@@ -1,4 +1,6 @@
-import { Card, Stack, Typography } from '@mui/material'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import { Box, Card, Stack, Typography } from '@mui/material'
+
 import React from 'react'
 
 const NoneStatus = () => {
@@ -12,14 +14,42 @@ const NoneStatus = () => {
       }}
     >
       <Stack spacing={0.2} sx={{ mt: '10px' }}>
+        <Box
+          sx={{
+            width: '100px',
+            pt: '6px',
+            pl: '34px',
+          }}
+        >
+          <Typography
+            textAlign={'center'}
+            sx={{
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: '18px',
+              border: '2px solid',
+              borderColor: '#04c92e',
+              borderRadius: '10px',
+              p: 1,
+              bgcolor: '#6ef58b',
+              display: 'flex',
+              justifyContent: 'center',
+              color: '#ff6600',
+            }}
+          >
+            <LightModeIcon />
+            起床中
+          </Typography>
+        </Box>
         <Typography
           textAlign={'center'}
-          sx={{ mt: '30px', fontWeight: 'bold', fontSize: '20px' }}
+          fontWeight={'bold'}
+          sx={{ pt: '10px' }}
         >
-          起床中
+          SwimInで
         </Typography>
-        <Typography textAlign={'center'}>
-          今日からSwimInで友達と繋がりましょう!
+        <Typography textAlign={'center'} fontWeight={'bold'}>
+          繋がりましょう！
         </Typography>
       </Stack>
     </Card>
