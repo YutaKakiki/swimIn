@@ -30,6 +30,12 @@ class Api::V1::SleepsController < ApplicationController
     actual_wake = Time.zone.parse(params[:sleep][:actual_wake])
     sleep.update!(state: "wake", actual_wake: params[:sleep][:actual_wake], comment: params[:sleep][:comment])
     user.calculate_time(actual_wake)
+    start_data=Time.current.ago(1.month).beginning_of_month
+    end_data=Time.current.ago(1.month).end_of_month
+    last_month_data=current_api_v1_user.calculated_times.where(created_at:start_data..end_data)
+    if last_month_data.exists?
+      last_month_data.destroy_all
+    end
     render json: sleep, serializer: SleepSerializer, status: :ok
   end
 
@@ -62,8 +68,6 @@ class Api::V1::SleepsController < ApplicationController
       weekly_times = current_api_v1_user.calculated_times.where(created_at: Date.today - 6..Date.today)
     end
 
-
-
     weekly_sleep_times = weekly_times.map(&:sleep_time)
     weekly_diff_times = weekly_times.map(&:diff_time)
     # 平均睡眠時間は、当日のデータ（＝０ふん）を除いた（最大）過去6日分で計算したい
@@ -77,9 +81,6 @@ class Api::V1::SleepsController < ApplicationController
     monthly_sleep_times_for_av=monthly_times.map(&:sleep_time)
     monthly_sleep_times_for_av.pop if monthly_sleep_times_for_av.count > 1
     monthly_sleep_times_average = monthly_sleep_times_for_av.sum / monthly_sleep_times_for_av.length
-
-
-
       render json:
       { weekly: {
           sleep_times: weekly_sleep_times,

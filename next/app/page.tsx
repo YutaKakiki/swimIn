@@ -32,8 +32,10 @@ const Home = () => {
     <>
       <Box sx={{ mt: '150px', mb: '60px' }}>
         <Box sx={{ mb: '-20px', color: '#001e43' }}>
-          <Typography textAlign={'center'}>おやすみで繋がろう</Typography>
-          <Typography textAlign={'center'}>
+          <Typography textAlign={'center'} fontWeight={'bold'}>
+            おやすみで繋がろう
+          </Typography>
+          <Typography textAlign={'center'} fontWeight={'bold'}>
             睡眠を管理できるSNSアプリ
           </Typography>
         </Box>
