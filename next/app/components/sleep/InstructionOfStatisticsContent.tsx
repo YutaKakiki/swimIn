@@ -1,6 +1,6 @@
+import AssessmentIcon from '@mui/icons-material/Assessment'
 import { Box, Card, Divider, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
-
 const InstructionOfStatisticsContent = () => {
   return (
     <>
@@ -16,21 +16,25 @@ const InstructionOfStatisticsContent = () => {
         <Box sx={{ display: 'flex' }}>
           <Typography
             textAlign={'center'}
-            fontSize={'20px'}
+            fontSize={'18px'}
+            fontWeight={'bold'}
             sx={{
-              boder: '1px ',
-              borderRadius: '20px',
-              bgcolor: '#1262b3',
-              color: 'white',
-              width: '200px',
-              m: '0 auto',
+              p: '2px',
+              m: ' 0 auto',
               mt: '10px',
+              width: '170px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              border: '2px solid',
+              borderRadius: '20px',
             }}
           >
+            <AssessmentIcon sx={{ mt: '-2px' }} />
             睡眠履歴の見方
           </Typography>
         </Box>
-        <Stack spacing={2} sx={{ mt: '30px' }}>
+        <Stack spacing={2} sx={{ mt: '50px' }}>
           <Box>
             <Image src="/Instruction1.png" alt="1" height={200} width={350} />
             <Box
@@ -77,7 +81,7 @@ const InstructionOfStatisticsContent = () => {
                 ・タップすると、詳細を見ることができます
               </Typography>
               <Typography sx={{ fontSize: '13px', fontWeight: 'bold' }}>
-                ・また、打刻をしなかった場合は睡眠時間、
+                ・打刻をしなかった場合は睡眠時間、
               </Typography>
               <Typography
                 sx={{ fontSize: '13px', fontWeight: 'bold', ml: '13px' }}

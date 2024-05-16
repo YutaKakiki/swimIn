@@ -6,6 +6,7 @@ import HistoryIcon from '@mui/icons-material/History'
 import HotelIcon from '@mui/icons-material/Hotel'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import ModeNightIcon from '@mui/icons-material/ModeNight'
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant'
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
 import PersonSearchIcon from '@mui/icons-material/PersonSearch'
 import UpdateDisabledIcon from '@mui/icons-material/UpdateDisabled'
@@ -48,6 +49,7 @@ type FriendSleepType = {
   bedtime: Dayjs
   comment: string
 }
+export const revalidate = 10
 const FriendsPage = () => {
   const defaultValue = {
     id: 0,
@@ -125,7 +127,10 @@ const FriendsPage = () => {
       setSlide(false)
     })
   }
-
+  const isOverSleeping =
+    friendSleep &&
+    dayjs().isAfter(dayjs(friendSleep.targetWake)) &&
+    friendSleep.actualWake == null
   return (
     <>
       {show && (
@@ -299,8 +304,40 @@ const FriendsPage = () => {
                             </Typography>
                           </Box>
                         )}
+                        {isOverSleeping && (
+                          <>
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                border: '1px',
+                                width: '100px',
+                                m: '0 auto',
+                                mt: '20px',
+                                borderRadius: '30px',
+                                bgcolor: '#fa5e52',
+                                p: 0.5,
+                              }}
+                            >
+                              <NotificationImportantIcon
+                                sx={{
+                                  color: 'white',
+                                }}
+                              />
+                              <Typography
+                                sx={{
+                                  color: 'white',
+                                  fontSize: '15px',
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                寝坊中!!
+                              </Typography>
+                            </Box>
+                          </>
+                        )}
                       </Box>
-
                       {friendSleep.state == 'wake' ? (
                         <>
                           <Box
@@ -364,7 +401,7 @@ const FriendsPage = () => {
                                     border: '1px ',
                                     borderRadius: '30px',
                                     p: '5px',
-                                    width: '180px',
+                                    width: '200px',
                                     bgcolor: '#00b02e',
                                     color: 'white',
 
@@ -399,10 +436,9 @@ const FriendsPage = () => {
                                   border: '1px ',
                                   borderRadius: '30px',
                                   p: '5px',
-                                  width: '180px',
+                                  width: '190px',
                                   bgcolor: '#1b84f5',
                                   color: 'white',
-
                                   mb: '10px',
                                 }}
                               >

@@ -31,6 +31,7 @@ type UpdateProfileDataType = {
 const EditForm: React.FC<PropsTypes> = ({ openEdit, setOpenEdit }) => {
   const { mutate } = useSWRConfig()
   const [user, setUser] = useUserState()
+
   const handleBack = () => {
     setOpenEdit(!openEdit)
   }

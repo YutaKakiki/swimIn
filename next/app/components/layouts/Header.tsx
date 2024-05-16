@@ -42,13 +42,13 @@ export const Header = () => {
             }}
           >
             <Box sx={{ p: 0 }}>
-              <Link href="/">
+              <Link href="/" style={{ textDecorationLine: 'none' }}>
                 <Typography
                   component="h2"
                   sx={{
-                    fontSize: '30px',
+                    fontSize: '35px',
                     fontWeight: 'bold',
-                    p: 0,
+                    mb: '-5px',
                     color: 'white',
                   }}
                 >

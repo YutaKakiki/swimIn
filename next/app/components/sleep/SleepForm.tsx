@@ -30,8 +30,13 @@ const SleepForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
   const [sleep, setSleep] = useSleepState()
   const [user] = useUserState()
   const [targetWake, setTargetWake] = useState(dayjs())
+  // 日を跨ぐ場合の分岐
+  // 跨ぐようなら1日足す
+  const forkedTargetWake = targetWake.isBefore(dayjs())
+    ? targetWake.add(1, 'day')
+    : targetWake
   const [comment, setComment] = useState('')
-  const estimatedSleepTime = targetWake.diff(dayjs(), 'minute')
+  const estimatedSleepTime = forkedTargetWake.diff(dayjs(), 'minute')
   const absEstimatedSleepTime = dayjs.duration(
     Math.abs(estimatedSleepTime),
     'minute',
@@ -63,7 +68,8 @@ const SleepForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
     const data = {
       userId: user.id,
       sleep: {
-        targetWake: targetWake.format(),
+        // ここの、日付周りの条件分岐をする
+        targetWake: forkedTargetWake.format(),
         comment: comment,
       },
     }
