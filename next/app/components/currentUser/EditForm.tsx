@@ -60,6 +60,7 @@ const EditForm: React.FC<PropsTypes> = ({ openEdit, setOpenEdit }) => {
           ...user,
           ...res.data,
         })
+        localStorage.setItem('uid', res.headers['uid'] || '')
       })
       .then(() => {
         const revalidateUrl =

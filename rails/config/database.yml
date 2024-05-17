@@ -30,9 +30,14 @@ development:
   adapter: sqlite3
 
 test:
-  <<: *default
-  database: db/test.sqlite3
-  adapter: sqlite3
+  adapter: postgresql
+  encoding: unicode
+  username: yuta
+  password: uta12242002
+  host: 127.0.0.1
+  port: 5433
+  database: postgres_db_test
+  pool: 5
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

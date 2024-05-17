@@ -34,9 +34,9 @@ const InstructionOfStatisticsContent = () => {
             睡眠履歴の見方
           </Typography>
         </Box>
-        <Stack spacing={2} sx={{ mt: '50px' }}>
+        <Stack spacing={2} sx={{ mt: '10px' }}>
           <Box>
-            <Image src="/Instruction1.png" alt="1" height={200} width={350} />
+            <Image src="/Instruction1.png" alt="1" height={300} width={350} />
             <Box
               sx={{
                 border: '1px solid',

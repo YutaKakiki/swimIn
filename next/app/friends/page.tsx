@@ -224,6 +224,7 @@ const FriendsPage = () => {
                       height: 80,
                       m: '0 auto',
                       mb: '10px',
+                      mt: '10px',
                     }}
                   >
                     <FriendsProf otherUser={friend} width={80} height={80} />

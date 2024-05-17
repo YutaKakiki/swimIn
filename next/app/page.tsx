@@ -1,33 +1,19 @@
 'use client'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import {
   Box,
   Card,
   Divider,
-  IconButton,
   List,
   ListItem,
   ListItemText,
   Typography,
 } from '@mui/material'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React from 'react'
+import PhoneImage1 from './components/Home/PhoneImage1'
+import PhoneImage2 from './components/Home/PhoneImage2'
 
 const Home = () => {
-  const [count, setCount] = useState(1)
-  const handleForward = () => {
-    setCount((prev) => prev + 1)
-    if (count == 3) {
-      setCount(1)
-    }
-  }
-  const handleBack = () => {
-    setCount((prev) => prev - 1)
-    if (count == 1) {
-      setCount(3)
-    }
-  }
   return (
     <>
       <Box sx={{ mt: '150px', mb: '60px' }}>
@@ -130,30 +116,7 @@ const Home = () => {
                   >
                     友達が起きているか寝ているかが分かる!
                   </Typography>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      mt: '30px',
-                      mb: '30px',
-                    }}
-                  >
-                    <IconButton onClick={handleBack}>
-                      <ArrowBackIosIcon sx={{ fontSize: '50px', ml: '20px' }} />
-                    </IconButton>
-                    <Image
-                      src={`/phone(${count}).png`}
-                      alt="image"
-                      width={210}
-                      height={400}
-                    />
-                    <IconButton onClick={handleForward}>
-                      <ArrowForwardIosIcon
-                        sx={{ fontSize: '50px', ml: '20px' }}
-                      />
-                    </IconButton>
-                  </Box>
+                  <PhoneImage1 />
                   <Typography
                     sx={{
                       border: '1px solid',
@@ -197,7 +160,14 @@ const Home = () => {
                   <Typography fontWeight={'bold'}>
                     友達が待ち合わせに来ない理由がわかる！
                   </Typography>
-                  <Box sx={{ display: 'flex', m: '0 auto', mt: '-20px' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      m: '0 auto',
+                      mt: '-20px',
+                      ml: '-15px',
+                    }}
+                  >
                     <Image
                       src="/oversleep.png"
                       alt="image"
@@ -272,21 +242,7 @@ const Home = () => {
                   >
                     自身の睡眠履歴をチェックできる！
                   </Typography>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      mt: '30px',
-                      mb: '30px',
-                    }}
-                  >
-                    <Image
-                      src="/phone4.png"
-                      alt="image"
-                      width={210}
-                      height={400}
-                    />
-                  </Box>
+                  <PhoneImage2 />
                   <Typography
                     sx={{
                       border: '1px solid',
@@ -297,6 +253,18 @@ const Home = () => {
                     }}
                   >
                     月毎、週毎の平均睡眠時間をリアルタイムに把握することが出来ます
+                  </Typography>
+                  <br />
+                  <Typography
+                    sx={{
+                      border: '1px solid',
+                      borderRadius: '10px',
+                      p: 1,
+                      borderColor: '#c0c0c0',
+                      color: '#696969',
+                    }}
+                  >
+                    寝る時に明日の目標起床時刻をセットし、起きる時にボタンをワンタップするだけで睡眠時間や目標通り起きれたのかが算出されます
                   </Typography>
                   <br />
                   <Typography
@@ -328,7 +296,7 @@ const Home = () => {
                     メリット
                   </Typography>
                   <Typography fontWeight={'bold'}>
-                    睡眠習慣を数字で見ることで、習慣の自己改善につながります
+                    睡眠習慣を数字で知ることで、習慣の自己改善につながります
                   </Typography>
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Image
@@ -340,7 +308,7 @@ const Home = () => {
                   </Box>
 
                   <Typography sx={{ color: '#696969' }}>
-                    睡眠時間や達成度の傾向から睡眠習慣を評価でき、「最近夜更かししすぎて起きれてないな...」と気づくことが出来ます
+                    睡眠時間や達成度の傾向から睡眠習慣を評価でき、「最近夜更かししすぎて起きれてないな...」などのように気づくことが出来ます
                   </Typography>
                   <Typography sx={{ color: '#696969', mt: '20px' }}>
                     睡眠習慣の実態に気づくことができれば、それが改善のきっかけになる事でしょう

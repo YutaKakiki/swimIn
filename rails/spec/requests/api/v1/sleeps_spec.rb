@@ -87,6 +87,7 @@ RSpec.describe "Api::V1::Sleeps", type: :request do
         30.times do
           create(:calculated_time_4, user: current_user)
         end
+
       end
 
       it "7日分のそれぞれの配列と5月の一ヶ月分の配列が返ってくる" do
@@ -99,8 +100,8 @@ RSpec.describe "Api::V1::Sleeps", type: :request do
         expect(res["weekly"]["diff_times"].length).to eq 7
         expect(res["monthly"]["diff_times"].length).to eq 30
         expect(res["monthly"]["diff_times"].length).to eq 30
-
-        sleep_times_average = res["weekly"]["sleep_times"].sum / res["weekly"]["sleep_times"].size
+        # 平均睡眠時間は、当日を除く
+        sleep_times_average = res["weekly"]["sleep_times"].sum / res["weekly"]["sleep_times"].length - 1
         expect(res["weekly"]["sleep_times_average"]).to eq sleep_times_average
       end
     end

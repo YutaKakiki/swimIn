@@ -115,6 +115,7 @@ const ModalContent = () => {
                       borderColor: 'black',
                       borderRadius: '10px',
                       overflow: 'auto',
+                      fontSize: '12px',
                     }}
                   >
                     {sleep.comment}
