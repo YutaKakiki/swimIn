@@ -88,6 +88,16 @@ const InstructionOfStatisticsContent = () => {
               >
                 目標との差のデータが共に0となります
               </Typography>
+              <Typography
+                sx={{
+                  fontSize: '10px',
+                  fontWeight: 'bold',
+                  ml: '13px',
+                  mt: '3px',
+                }}
+              >
+                ※０のデータは平均睡眠時間に含まれません
+              </Typography>
             </Box>
             <Divider sx={{ width: '300px', m: '0 auto', mt: '30px' }} />
           </Box>
