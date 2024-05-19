@@ -1,6 +1,6 @@
 class AddIndexToRelationships < ActiveRecord::Migration[7.0]
   def change
-    # 一意制約に違反する重複レコードを削除します
+    # 一意制約に違反する重複レコードを削除
     execute <<-SQL
       CREATE TEMPORARY TABLE tmp_relationships AS
       SELECT MIN(id) AS id FROM relationships GROUP BY follower_id, followed_id;
