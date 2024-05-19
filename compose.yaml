@@ -1,14 +1,15 @@
 services:
-  postgres:
-    image: postgres:14.2
+  db:
+    image: mysql:8.0.32
     environment:
-      POSTGRES_DB: postgres_db
-      POSTGRES_USER: yuta
-      POSTGRES_PASSWORD: uta12242002
-    volumes:
-      - postgres-data:/var/lib/postgres/data
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: myapp_development
+      MYSQL_USER: yuta
+      MYSQL_PASSWORD: password
     ports:
-      - "5433:5432"
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
   rails:
     build:
       context: ./rails
@@ -16,9 +17,9 @@ services:
     volumes:
       - ./rails:/myapp
     depends_on:
-      - postgres
+      - db
     ports:
-      - "3000:3000"
+      - 3000:3000
     tty: true
     stdin_open: true
   next:
@@ -28,9 +29,9 @@ services:
     stdin_open: true
     command: "npm run dev"
     ports:
-      - "8000:3000"
+      - 8000:3000
     volumes:
       - ./next:/myapp
 volumes:
-  postgres-data:
+  mysql_data:
     

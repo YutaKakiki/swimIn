@@ -48,7 +48,7 @@ class Api::V1::SleepsController < ApplicationController
 
   def return_times
     calc_times = current_api_v1_user.calculated_times
-    monthly_times = current_api_v1_user.calculated_times.where("strftime('%m',created_at)=?", DateTime.now.strftime("%m"))
+    monthly_times = current_api_v1_user.calculated_times.where("DATE_FORMAT(created_at, '%m') = ?", DateTime.now.strftime("%m"))
     # 最大で七日分の要素を配列にしたい。
     # DBが七日分のデータ以下だった場合には、
     # その数分に応じた数の要素を詰めたい。

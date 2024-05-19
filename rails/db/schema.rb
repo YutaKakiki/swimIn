@@ -11,16 +11,16 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2024_05_03_233206) do
-  create_table "calculated_times", force: :cascade do |t|
-    t.integer "sleep_time"
-    t.integer "diff_time"
-    t.integer "user_id", null: false
-    t.date "created_at"
-    t.date "updated_at"
+  create_table "calculated_times", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "sleep_time", comment: "睡眠時間"
+    t.integer "diff_time", comment: "目標起床時刻と実際の起床時刻の差分"
+    t.bigint "user_id", null: false
+    t.date "created_at", null: false
+    t.date "updated_at", null: false
     t.index ["user_id"], name: "index_calculated_times_on_user_id"
   end
 
-  create_table "relationships", force: :cascade do |t|
+  create_table "relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
     t.datetime "created_at", null: false
@@ -30,19 +30,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_233206) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
-  create_table "sleeps", force: :cascade do |t|
-    t.integer "state"
-    t.datetime "bedtime"
-    t.datetime "target_wake"
-    t.datetime "actual_wake"
-    t.integer "user_id", null: false
+  create_table "sleeps", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "state", comment: "状態(0:睡眠中,1:起床中)"
+    t.datetime "bedtime", comment: "就寝時刻"
+    t.datetime "target_wake", comment: "目標起床時刻"
+    t.datetime "actual_wake", comment: "実際の起床時刻"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "comment"
     t.index ["user_id"], name: "index_sleeps_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false
