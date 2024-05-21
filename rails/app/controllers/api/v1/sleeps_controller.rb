@@ -67,7 +67,7 @@ class Api::V1::SleepsController < ApplicationController
                    else
                      current_api_v1_user.calculated_times.where(created_at: Time.zone.today - 6..Time.zone.today)
                    end
-  # ハッシュから各プロパティを抜き出して配列にする
+    # ハッシュから各プロパティを抜き出して配列にする
     weekly_sleep_times = weekly_times.map(&:sleep_time)
     weekly_diff_times = weekly_times.map(&:diff_time)
     # 平均睡眠時間は、当日のデータ（＝０ふん）を除いた（最大）過去6日分で計算したい
@@ -82,7 +82,7 @@ class Api::V1::SleepsController < ApplicationController
     # 平均睡眠時間を、当日を除いた、当月の計算をしたい
     monthly_sleep_times_for_av = monthly_times.map(&:sleep_time)
     monthly_sleep_times_for_av.pop if monthly_sleep_times_for_av.count > 1
-     # 睡眠時間０のデータは計算に含めない
+    # 睡眠時間０のデータは計算に含めない
     monthly_sleep_times_for_av.delete(0)
     monthly_sleep_times_average = monthly_sleep_times_for_av.sum / monthly_sleep_times_for_av.length
     render json:

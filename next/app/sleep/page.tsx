@@ -11,8 +11,10 @@ import SleepingFriends from '../components/sleep/SleepingFriends'
 import WakeStatus from '../components/sleep/WakeStatus'
 import WakeForm from '../components/sleep/Wakeform'
 import { useSleepState } from '../hooks/useGrobalState'
+import useRequireSignIn from '../hooks/useRequireSignIn'
 
 const SleepPage = () => {
+  useRequireSignIn()
   const [sleep] = useSleepState()
   const [hide, setHide] = useState(false)
   const [zoom, setZoom] = useState(false)

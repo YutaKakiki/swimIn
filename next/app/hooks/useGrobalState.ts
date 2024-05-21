@@ -34,6 +34,7 @@ type snackbarStateType = {
   severity: 'success' | 'error' | 'info' | null
   pathName: string | null
 }
+
 export const useSnackbarState = () => {
   const fallbackData: snackbarStateType = {
     message: null,

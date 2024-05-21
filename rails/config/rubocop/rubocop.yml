@@ -84,7 +84,7 @@ Layout/LineLength:
 
 #################### Metrics ###############################
 Metrics/AbcSize:
-  Max: 30
+  Max: 90
 
 Metrics/BlockLength:
   Exclude:

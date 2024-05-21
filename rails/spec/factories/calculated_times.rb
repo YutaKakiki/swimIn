@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :calculated_time_4, class: "CalculatedTime" do
+  factory :calculated_time_April, class: "CalculatedTime" do
     sleep_time { Faker::Number.between(from: 40, to: 90) }
     diff_time { Faker::Number.between(from: -30, to: 30) }
     sequence(:created_at) {|n| DateTime.new(2024, 4, n) }
@@ -8,7 +8,7 @@ FactoryBot.define do
 end
 
 FactoryBot.define do
-  factory :calculated_time_5, class: "CalculatedTime" do
+  factory :calculated_time_May, class: "CalculatedTime" do
     sleep_time { Faker::Number.between(from: 40, to: 90) }
     diff_time { Faker::Number.between(from: -30, to: 30) }
     sequence(:created_at) {|n| DateTime.new(2024, 5, n) }

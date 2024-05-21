@@ -119,6 +119,7 @@ const SearchForm: React.FC<PropsTypes> = ({ setOpen }) => {
                         sx={{
                           width: '240px',
                         }}
+                        placeholder="メールアドレスを入力"
                       />
                     )}
                   />

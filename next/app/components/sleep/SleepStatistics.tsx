@@ -32,7 +32,7 @@ const SleepStatistics = () => {
       uid: localStorage.getItem('uid'),
     }
     const forgetStampProcess = async () => {
-      await axios.get(forgetUrl, { headers })
+      await axios.get(forgetUrl, { headers }).catch((err) => console.log(err))
     }
     forgetStampProcess()
   }, [])

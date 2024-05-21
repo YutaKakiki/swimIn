@@ -35,6 +35,7 @@ import Friends from '../components/friends/Friends'
 import { FriendsProf } from '../components/friends/FriendsProf'
 import ListedCurrentUser from '../components/friends/ListedCurrentUser'
 import SearchForm from '../components/searchFriends/SerchForm'
+import useRequireSignIn from '../hooks/useRequireSignIn'
 import fetcher from '../util/fetcher'
 
 type FriendsType = {
@@ -51,6 +52,7 @@ type FriendSleepType = {
 }
 export const revalidate = 10
 const FriendsPage = () => {
+  useRequireSignIn()
   const defaultValue = {
     id: 0,
     name: '',

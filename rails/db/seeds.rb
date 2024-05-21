@@ -27,8 +27,8 @@ end
 user = User.find_by(email: "uta31501224@gmail.com")
 
 30.times do |_n|
-  FactoryBot.create(:calculated_time_4, user:)
+  FactoryBot.create(:calculated_time_April, user:)
 end
 5.times do |_n|
-  FactoryBot.create(:calculated_time_5, user:)
+  FactoryBot.create(:calculated_time_May, user:)
 end

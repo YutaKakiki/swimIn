@@ -1,4 +1,5 @@
 'use client'
+import WarningIcon from '@mui/icons-material/Warning'
 import {
   Box,
   Card,
@@ -127,6 +128,16 @@ const Home = () => {
                     }}
                   >
                     追加した友達が寝ているのか/起きているのかが一覧でわかります
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: '#696969',
+                      fontSize: '13px',
+                      mt: '7px',
+                      p: 1,
+                    }}
+                  >
+                    ※メールアドレスで友達を検索、追加することが出来ます
                   </Typography>
                   <br />
                   <Typography
@@ -314,6 +325,27 @@ const Home = () => {
                     睡眠習慣の実態に気づくことができれば、それが改善のきっかけになる事でしょう
                   </Typography>
                 </Card>
+                <Box
+                  sx={{
+                    mt: '20px',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    p: 1,
+                    border: '1px solid',
+                    borderRadius: '10px',
+                    borderColor: "'#001e43'",
+                  }}
+                >
+                  <WarningIcon fontSize="small" />
+                  <Box sx={{ ml: '5px' }}>
+                    <Typography color={'#001e43'} fontSize={15}>
+                      本アプリはモバイル端末のみ対応しています。
+                    </Typography>
+                    <Typography color={'#001e43'} fontSize={15}>
+                      PCやタブレットでご覧の方はモバイル端末で再度ご覧ください。
+                    </Typography>
+                  </Box>
+                </Box>
               </ListItemText>
             </ListItem>
             <Box sx={{ mt: '80px', mb: '80px' }}>

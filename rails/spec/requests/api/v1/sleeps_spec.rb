@@ -85,7 +85,7 @@ RSpec.describe "Api::V1::Sleeps", type: :request do
 
       before do
         30.times do
-          create(:calculated_time_4, user: current_user)
+          create(:calculated_time_April, user: current_user)
         end
       end
 
@@ -99,8 +99,6 @@ RSpec.describe "Api::V1::Sleeps", type: :request do
         expect(res["weekly"]["diff_times"].length).to eq 7
         expect(res["monthly"]["diff_times"].length).to eq 30
         expect(res["monthly"]["diff_times"].length).to eq 30
-        # sleep_times_average = res["weekly"]["sleep_times"].sum / res["weekly"]["sleep_times"].length
-        # expect(res["weekly"]["sleep_times_average"]).to eq sleep_times_average
       end
     end
   end

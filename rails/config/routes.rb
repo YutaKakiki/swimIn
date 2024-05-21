@@ -26,7 +26,7 @@ Rails.application.routes.draw do
         end
       end
 
-      # get "health_check", to: "health_check#index"
+      get "health_check", to: "health_check#index"
     end
   end
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?

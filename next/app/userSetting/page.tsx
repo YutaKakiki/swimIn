@@ -5,8 +5,10 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useUserState } from '../hooks/useGrobalState'
+import useRequireSignIn from '../hooks/useRequireSignIn'
 
 const SettingsPage = () => {
+  useRequireSignIn()
   const [user, setUser] = useUserState()
   const router = useRouter()
   const handleClick = async () => {
