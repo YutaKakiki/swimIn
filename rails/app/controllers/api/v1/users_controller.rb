@@ -1,11 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :authenticate_api_v1_user!
 
-  def show
-    user = User.find_by(uid: "#{CGI.unescape(params[:id])}.com")
-    render json: user, serializer: CurrentUserSerializer, status: :ok
-  end
-
   def update
     user = User.find_by(id: params[:id])
     if user.update(user_params)
@@ -19,6 +14,12 @@ class Api::V1::UsersController < ApplicationController
     followings = current_api_v1_user.following.includes(:sleep).order("sleeps.updated_at DESC")
     followings_sleep = followings.map(&:sleep)
     render json: { followings:, followings_sleep: }, each_serializer: CurrentUserSerializer
+  end
+
+  def find
+    email=params[:user][:email]
+    user=User.find_by(uid:email)
+    render json: user, serializer: CurrentUserSerializer, status: :ok
   end
 
   # def followers

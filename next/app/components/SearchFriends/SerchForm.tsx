@@ -39,20 +39,19 @@ const SearchForm: React.FC<PropsTypes> = ({ setOpen }) => {
   })
 
   const onSubmit = async (formData: { email: string }) => {
-    const email = formData.email
-    const url =
-      process.env.NEXT_PUBLIC_API_BASE_URL +
-      '/users/' +
-      encodeURIComponent(email)
+    const email = { user: { email: formData.email } }
+    const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/users/find'
     const headers = {
       'Content-Type': 'application/json',
       'access-token': localStorage.getItem('access-token'),
       client: localStorage.getItem('client'),
       uid: localStorage.getItem('uid'),
     }
+
     await axios
-      .get(url, { headers })
+      .post(url, email, { headers })
       .then((res) => {
+        console.log(res.data)
         setIsSerched(true)
         setTargetUser(res.data)
       })

@@ -45,13 +45,14 @@ const SignUpPage = () => {
         { ...data, confirm_success_url: ConfirmationSuccessUrl },
         { headers },
       )
-      .then()
       .then((res) => {
         localStorage.setItem('access-token', res.headers['access-token'] || '')
         localStorage.setItem('client', res.headers['client'] || '')
         localStorage.setItem('uid', res.headers['uid'] || '')
+      })
+      .then(() => {
         setSnackbar({
-          message: '認証メールを送信しました',
+          message: '認証メールを送信しました。本人確認を完了させてください',
           severity: 'info',
           pathName: '/',
         })

@@ -30,6 +30,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-hook-form": "^7.46.0",
+    "sharp": "^0.33.4",
     "snakecase-keys": "^8.0.0",
     "swr": "^2.2.5",
     "yup": "^1.4.0"

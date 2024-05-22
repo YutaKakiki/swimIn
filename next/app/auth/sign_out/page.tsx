@@ -8,10 +8,8 @@ import {
   useSnackbarState,
   useUserState,
 } from '@/app/hooks/useGrobalState'
-import useRequireSignIn from '@/app/hooks/useRequireSignIn'
 
 const SignOut = () => {
-  useRequireSignIn()
   const [, setSleep] = useSleepState()
   const [, setSnackbar] = useSnackbarState()
   const [, setUser] = useUserState()
