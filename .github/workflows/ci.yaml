@@ -2,9 +2,9 @@ name: Continuous Integration
 
 on:
   push:
-      branches-ignore:
+    branches-ignore:
        - "main"
-   workflow_call:
+  workflow_call:
 
 jobs:
   rspec:
