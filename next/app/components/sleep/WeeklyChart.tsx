@@ -41,10 +41,10 @@ const WeeklyChart: React.FC<PropsType> = ({ sleepTimeArr, diffTimeArr }) => {
     sleepTimeArr.unshift(0)
     diffTimeArr.unshift(0)
   }
-  // 現在の日時から７日取得する
+
+  // 過去７日間の睡眠データ
   const reverseLabels: string[] = []
-  // 日付を跨いだとしても、前日の睡眠時間にしたい
-  for (let i: number = 1; i < 7; i++) {
+  for (let i: number = 0; i < 7; i++) {
     const date = dayjs().subtract(i, 'd').format('M/D')
     reverseLabels.push(date)
   }

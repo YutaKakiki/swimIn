@@ -16,12 +16,18 @@ class Api::V1::SleepsController < ApplicationController
   def create
     user = User.find_by(id: params[:user_id])
     sleep = user.build_sleep(sleep_params)
-    sleep.update!(state: "sleep", bedtime: DateTime.now)
-    if sleep.save
-      render json: sleep, serializer: SleepSerializer, status: :ok
-    else
-      render json: { error: "おやすみ打刻に失敗しました。" }, status: :bad_request
-    end
+    # 寝た時間が、午前０時〜正午であれば、日付を昨日にする。（人間の感覚で）
+      if DateTime.now.strftime("%H:%M:%S").between?(Time.parse("00:00:00"),Time.parse("12:00:00"))
+        sleep.update!(state: "sleep", bedtime: DateTime.now,created_at:DateTime.now.yesterday)
+      else
+        sleep.update!(state: "sleep", bedtime: DateTime.now)
+      end
+
+      if sleep.save
+        render json: sleep, serializer: SleepSerializer, status: :ok
+      else
+        render json: { error: "おやすみ打刻に失敗しました。" }, status: :bad_request
+      end
   end
 
   def update
@@ -73,7 +79,7 @@ class Api::V1::SleepsController < ApplicationController
     weekly_diff_times = weekly_times.map(&:diff_time)
     # 平均睡眠時間は、当日のデータ（＝０ふん）を除いた（最大）過去6日分で計算したい
     weekly_sleep_times_for_av = weekly_times.map(&:sleep_time)
-    weekly_sleep_times_for_av.pop if weekly_sleep_times_for_av.last > 1
+    weekly_sleep_times_for_av.pop if weekly_sleep_times_for_av.last == 0
     # 睡眠時間０のデータは計算に含めない
     weekly_sleep_times_for_av.delete(0)
     weekly_sleep_times_average = weekly_sleep_times_for_av.sum / weekly_sleep_times_for_av.length
@@ -82,7 +88,7 @@ class Api::V1::SleepsController < ApplicationController
     monthly_diff_times = monthly_times.map(&:diff_time)
     # 平均睡眠時間を、当日を除いた、当月の計算をしたい
     monthly_sleep_times_for_av = monthly_times.map(&:sleep_time)
-    monthly_sleep_times_for_av.pop if monthly_sleep_times_for_av.count > 1
+    monthly_sleep_times_for_av.pop if monthly_sleep_times_for_av.last == 0
     # 睡眠時間０のデータは計算に含めない
     monthly_sleep_times_for_av.delete(0)
     monthly_sleep_times_average = monthly_sleep_times_for_av.sum / monthly_sleep_times_for_av.length
