@@ -17,8 +17,8 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def find
-    email=params[:user][:email]
-    user=User.find_by(uid:email)
+    email = params[:user][:email]
+    user = User.find_by(uid: email)
     render json: user, serializer: CurrentUserSerializer, status: :ok
   end
 

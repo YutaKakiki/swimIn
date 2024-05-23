@@ -24,16 +24,18 @@ RSpec.describe "Api::V1::Users", type: :request do
   end
 
   describe "GET /api/v1/user/:id" do
-    subject { post(find_api_v1_users_path,params:, headers:) }
+    subject { post(find_api_v1_users_path, params:, headers:) }
 
     let(:current_user) { create(:user) }
     let(:target_user) { create(:user) }
     let(:headers) { current_user.create_new_auth_token }
-    let(:params){{
-      user:{
-        email:target_user.email
+    let(:params) {
+      {
+        user: {
+          email: target_user.email,
+        },
       }
-    }}
+    }
 
     it "emailを検索キーとしてユーザを検索できる" do
       subject

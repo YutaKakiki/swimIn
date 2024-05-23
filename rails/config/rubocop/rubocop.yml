@@ -309,3 +309,23 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: true
+
+# Rails/SkipsModelValidationsを無効にする
+Rails/SkipsModelValidations:
+  Enabled: false
+
+# Metrics/CyclomaticComplexityを無効にする
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+# Metrics/MethodLengthを無効にする
+Metrics/MethodLength:
+  Enabled: false
+
+# Metrics/PerceivedComplexityを無効にする
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+# Rails/InverseOfを無効にする
+Rails/InverseOf:
+  Enabled: false

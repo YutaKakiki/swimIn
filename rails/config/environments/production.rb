@@ -51,7 +51,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "myapp_production"
 
   # 認証メール送信に関する記述
-  config.action_mailer.perform_caching= false
+  config.action_mailer.perform_caching = false
   config.action_mailer.default_options = { from: "no-reply@.com" }
   config.action_mailer.default_url_options = { host: "https://swimin-app.com" }
   config.action_mailer.delivery_method = :smtp

@@ -33,8 +33,8 @@ class User < ApplicationRecord
     sleep = self.sleep
     # 00:00時〜12:00に寝た場合は、日付が昨日であり、時刻がおかしくなる可能性がある
     # そのため、時刻だけで計算する
-    bedtime = Time.parse(sleep.bedtime.strftime("%H:%M:%S"))
-    target_wake =  Time.parse(sleep.target_wake.strftime("%H:%M:%S"))
+    bedtime = Time.zone.parse(sleep.bedtime.strftime("%H:%M:%S"))
+    target_wake = Time.zone.parse(sleep.target_wake.strftime("%H:%M:%S"))
     sleep_time = (actual_wake - bedtime).to_i / 60
     diff_time = (actual_wake - target_wake).to_i / 60
     last_time = self.calculated_times.last

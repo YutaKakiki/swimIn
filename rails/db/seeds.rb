@@ -29,6 +29,6 @@ user = User.find_by(email: "uta31501224@gmail.com")
 # 30.times do |_n|
 #   FactoryBot.create(:calculated_time_April, user:)
 # end
-23.times do |n|
+23.times do |_n|
   FactoryBot.create(:calculated_time_May, user:)
 end
