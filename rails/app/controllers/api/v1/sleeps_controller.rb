@@ -18,7 +18,7 @@ class Api::V1::SleepsController < ApplicationController
     sleep = user.build_sleep(sleep_params)
     # 寝た時間が、午前０時〜正午であれば、日付を昨日にする。（人間の感覚で）
     if DateTime.now.strftime("%H:%M:%S").between?(Time.zone.parse("00:00:00"), Time.zone.parse("12:00:00"))
-      sleep.update!(state: "sleep", bedtime: DateTime.now, created_at: DateTime.now.yesterday)
+      sleep.update!(state: "sleep", bedtime:DateTime.now.yesterday)
     else
       sleep.update!(state: "sleep", bedtime: DateTime.now)
     end

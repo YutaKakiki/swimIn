@@ -1,6 +1,7 @@
 'use client'
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import HistoryIcon from '@mui/icons-material/History'
 import HotelIcon from '@mui/icons-material/Hotel'
@@ -31,6 +32,7 @@ import duration from 'dayjs/plugin/duration'
 extend(duration)
 import React, { useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
+import Followers from '../components/friends/Followers'
 import Friends from '../components/friends/Friends'
 import { FriendsProf } from '../components/friends/FriendsProf'
 import ListedCurrentUser from '../components/friends/ListedCurrentUser'
@@ -69,6 +71,7 @@ const FriendsPage = () => {
   const [friendSleep, setFriendSleep] = useState(sleepDefaultValue)
 
   const [open, setOpen] = useState<boolean>(false)
+  const [followerOpen, setFollowerOpen] = useState(false)
   const [slide, setSlide] = useState(false)
   const [show, setShow] = useState(true)
 
@@ -131,6 +134,13 @@ const FriendsPage = () => {
     friendSleep &&
     dayjs().isAfter(dayjs(friendSleep.targetWake)) &&
     friendSleep.actualWake == null
+
+  const handleFollowerOpen = () => {
+    setFollowerOpen(true)
+  }
+  const handleFollowerClose = () => {
+    setFollowerOpen(false)
+  }
   return (
     <>
       {show && (
@@ -138,18 +148,46 @@ const FriendsPage = () => {
           <Box sx={{ mt: '-45px' }}>
             <Container maxWidth="xl">
               <>
-                <Box>
-                  <Button
-                    sx={{ display: 'flex', margin: '0 0 0 auto', mr: '-18px' }}
-                    variant="outlined"
-                    onClick={handleOpen}
-                  >
-                    <PersonSearchIcon sx={{ fontSize: '40px' }} />
-                    <Typography color="black">ユーザー検索</Typography>
-                  </Button>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Box>
+                    <Button
+                      variant="outlined"
+                      onClick={handleFollowerOpen}
+                      sx={{ p: 1 }}
+                    >
+                      <GroupAddIcon fontSize="large" />
+                    </Button>
+                  </Box>
+                  <Box>
+                    <Button
+                      sx={{
+                        display: 'flex',
+                        margin: '0 0 0 auto',
+                        mr: '-18px',
+                      }}
+                      variant="outlined"
+                      onClick={handleOpen}
+                    >
+                      <PersonSearchIcon sx={{ fontSize: '40px' }} />
+                      <Typography color="black">ユーザー検索</Typography>
+                    </Button>
+                  </Box>
                 </Box>
                 <Modal open={open} onClose={handleClose} sx={{ top: '90px' }}>
                   <SearchForm setOpen={setOpen} />
+                </Modal>
+                <Modal
+                  open={followerOpen}
+                  onClose={handleFollowerClose}
+                  sx={{ top: '90px' }}
+                >
+                  <Followers close={setFollowerOpen} />
                 </Modal>
               </>
             </Container>

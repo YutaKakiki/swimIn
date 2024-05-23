@@ -1,0 +1,116 @@
+{
+    "family": "swimin-app-task-definition-backend",
+    "containerDefinitions": [
+        {
+            "name": "rails",
+            "image": "846869429016.dkr.ecr.ap-northeast-1.amazonaws.com/swimin-app-rails",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "rails-3000-tcp",
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "RAILS_MASTER_KEY",
+                    "value": "dfc438e785aa7719bea5c4d1bcc6fbfe"
+                },
+                {
+                    "name": "RAILS_LOG_TO_STDOUT\t",
+                    "value": "true"
+                }
+            ],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/swimin-app-task-definition-backend",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl --unix-socket /myapp/tmp/sockets/puma.sock localhost/api/v1/health_check || exit 1"
+                ],
+                "interval": 30,
+                "timeout": 5,
+                "retries": 3
+            },
+            "systemControls": []
+        },
+        {
+            "name": "nginx",
+            "image": "846869429016.dkr.ecr.ap-northeast-1.amazonaws.com/swimin-app-nginx",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "nginx-80-tcp",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [
+                {
+                    "sourceContainer": "rails",
+                    "readOnly": false
+                }
+            ],
+            "dependsOn": [
+                {
+                    "containerName": "rails",
+                    "condition": "HEALTHY"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/swimin-app-task-definition-backend",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl -f http://localhost/api/v1/health_check || exit 1"
+                ],
+                "interval": 30,
+                "timeout": 5,
+                "retries": 3
+            },
+            "systemControls": []
+        }
+    ],
+    "taskRoleArn": "arn:aws:iam::846869429016:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::846869429016:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    }
+}

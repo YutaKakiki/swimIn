@@ -22,10 +22,10 @@ class Api::V1::UsersController < ApplicationController
     render json: user, serializer: CurrentUserSerializer, status: :ok
   end
 
-  # def followers
-  #   followers=current_api_v1_user.followers
-  #   render json: followers
-  # end
+  def followers
+    followers = current_api_v1_user.followers.where.not(id: current_api_v1_user.following.pluck(:id))
+    render json: followers
+  end
 
   private
 
