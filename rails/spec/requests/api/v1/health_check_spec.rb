@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Api::V1::HealthChecks", type: :request do
   describe "GET /index" do
-    subject { get(api_v1_healths_checks_path) }
+    subject { get(api_v1_health_check_path) }
 
     it "JSON形式で出力できる" do
       subject

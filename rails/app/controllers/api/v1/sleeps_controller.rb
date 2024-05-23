@@ -30,6 +30,7 @@ class Api::V1::SleepsController < ApplicationController
     actual_wake = Time.zone.parse(params[:sleep][:actual_wake])
     sleep.update!(state: "wake", actual_wake: params[:sleep][:actual_wake], comment: params[:sleep][:comment])
     user.calculate_time(actual_wake)
+
     start_data = Time.current.ago(1.month).beginning_of_month
     end_data = Time.current.ago(1.month).end_of_month
     last_month_data = current_api_v1_user.calculated_times.where(created_at: start_data..end_data)
@@ -72,7 +73,7 @@ class Api::V1::SleepsController < ApplicationController
     weekly_diff_times = weekly_times.map(&:diff_time)
     # 平均睡眠時間は、当日のデータ（＝０ふん）を除いた（最大）過去6日分で計算したい
     weekly_sleep_times_for_av = weekly_times.map(&:sleep_time)
-    weekly_sleep_times_for_av.pop if weekly_sleep_times_for_av.count > 1
+    weekly_sleep_times_for_av.pop if weekly_sleep_times_for_av.last > 1
     # 睡眠時間０のデータは計算に含めない
     weekly_sleep_times_for_av.delete(0)
     weekly_sleep_times_average = weekly_sleep_times_for_av.sum / weekly_sleep_times_for_av.length

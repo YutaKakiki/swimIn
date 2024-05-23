@@ -7,7 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 # メインのサンプルユーザーを1人作成する
 User.create!(name: "柿木優汰",
-             email: "uta3150@gmail.com",
+             email: "uta31501224@gmail.com",
              password: "password",
              password_confirmation: "password",
              confirmed_at: Time.current)
@@ -26,9 +26,9 @@ end
 
 user = User.find_by(email: "uta31501224@gmail.com")
 
-30.times do |_n|
-  FactoryBot.create(:calculated_time_April, user:)
-end
-5.times do |_n|
+# 30.times do |_n|
+#   FactoryBot.create(:calculated_time_April, user:)
+# end
+23.times do |n|
   FactoryBot.create(:calculated_time_May, user:)
 end
