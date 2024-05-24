@@ -2,6 +2,7 @@ import { Avatar, Box, Button, Card, Divider, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { Dispatch, SetStateAction } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
+
 import { FriendsProf } from './FriendsProf'
 import fetcher from '@/app/util/fetcher'
 
