@@ -12,7 +12,6 @@ import {
 } from '@mui/material'
 import React from 'react'
 import useSWR from 'swr'
-
 import { FriendsProf } from '../friends/FriendsProf'
 import fetcher from '@/app/util/fetcher'
 
