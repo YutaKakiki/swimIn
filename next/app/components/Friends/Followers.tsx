@@ -35,10 +35,9 @@ const Followers: React.FC<PropsType> = ({ close }) => {
       mutate(revalidateUrl)
     })
   }
-
   return (
     <>
-      {data && (
+      <Box>
         <Card
           sx={{
             width: { xs: '300px' },
@@ -47,71 +46,89 @@ const Followers: React.FC<PropsType> = ({ close }) => {
             position: 'relative',
           }}
         >
-          <Typography
-            textAlign={'center'}
-            fontSize={'16px'}
-            sx={{
-              border: '1px solid',
-              width: '200px',
-              m: '0 auto',
-              mt: '15px',
-              borderRadius: '20px',
-              p: 1,
-              color: '#001e43',
-            }}
-          >
-            友達に追加されています！
-          </Typography>
-          <Box sx={{ p: 2, overflow: 'auto' }}>
-            {data.map((follower: FriendsType) => (
-              <>
-                <>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      mt: '20px',
-                    }}
-                  >
-                    <Avatar>
-                      <FriendsProf
-                        height={40}
-                        width={40}
-                        otherUser={follower}
+          {data && (
+            <Box>
+              <Typography
+                textAlign={'center'}
+                fontSize={'16px'}
+                sx={{
+                  border: '1px solid',
+                  width: '200px',
+                  m: '0 auto',
+                  mt: '15px',
+                  borderRadius: '20px',
+                  p: 1,
+                  color: '#001e43',
+                }}
+              >
+                友達に追加されています！
+              </Typography>
+              <Box sx={{ p: 2, overflow: 'auto' }}>
+                {data.map((follower: FriendsType) => (
+                  <>
+                    <>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          mt: '20px',
+                        }}
+                      >
+                        <Avatar sx={{ height: '33px', width: '33px' }}>
+                          <FriendsProf
+                            height={33}
+                            width={33}
+                            otherUser={follower}
+                          />
+                        </Avatar>
+                        <Typography
+                          fontSize={'20px'}
+                          sx={{ ml: '10px' }}
+                          fontWeight={'bold'}
+                        >
+                          {follower.name}
+                        </Typography>
+                        <Button
+                          onClick={() => {
+                            handleFollow(follower)
+                          }}
+                          sx={{ ml: '15px', width: '50px' }}
+                          variant="outlined"
+                        >
+                          追加
+                        </Button>
+                      </Box>
+                      <Divider
+                        sx={{
+                          width: '230px',
+                          flex: 'display',
+                          m: '0 auto',
+                          mt: '5px',
+                        }}
                       />
-                    </Avatar>
+                    </>
+                  </>
+                ))}
+                {data.length == 0 && (
+                  <Box sx={{ display: 'flex' }}>
                     <Typography
-                      fontSize={'25px'}
-                      sx={{ ml: '5px' }}
-                      fontFamily={'bold'}
-                    >
-                      {follower.name}
-                    </Typography>
-                    <Button
-                      onClick={() => {
-                        handleFollow(follower)
+                      textAlign={'center'}
+                      fontSize={15}
+                      sx={{
+                        m: '0 auto',
+                        mt: '20px',
                       }}
-                      sx={{ ml: '10px' }}
-                      variant="outlined"
                     >
-                      追加
-                    </Button>
+                      あなたを追加している友達はいません
+                    </Typography>
                   </Box>
-                  <Divider
-                    sx={{
-                      width: '200px',
-                      flex: 'display',
-                      m: '0 auto',
-                      mt: '5px',
-                    }}
-                  />
-                </>
-              </>
-            ))}
-          </Box>
+                )}
+              </Box>
+            </Box>
+          )}
         </Card>
-      )}
+      </Box>
     </>
   )
 }

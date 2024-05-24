@@ -128,12 +128,24 @@ const WakeForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
               </Typography>
 
               <Box sx={{ m: '0 auto', mt: '30px' }}>
-                <Typography textAlign={'center'} mb={'5px'}>
+                <Typography
+                  textAlign={'center'}
+                  mb={'5px'}
+                  sx={{
+                    color: '#696969',
+                    borderRadius: '8px',
+                    border: '1px solid',
+                    width: '115px',
+                    p: 0.5,
+                    textAlign: 'center',
+                    m: '0 auto',
+                  }}
+                >
                   コメントを残す
                 </Typography>
                 <TextareaAutosize
-                  style={{ width: '200px', height: '100px' }}
-                  placeholder="今日はどんな1日ですか？"
+                  style={{ width: '200px', height: '100px', marginTop: '10px' }}
+                  placeholder="コメントを入力"
                   onChange={changeComment}
                 />
               </Box>

@@ -44,6 +44,10 @@ RSpec.describe "Api::V1::Sleeps", type: :request do
   describe "PATCH /api/v1/sleeps/:id" do
     subject { patch(api_v1_sleep_path(current_user.id), headers:, params: body) }
 
+    around do |e|
+      travel_to("2024-04-08 00:00:00") { e.run }
+    end
+
     before do
       post(api_v1_sleeps_path, headers:, params:)
     end
@@ -69,8 +73,9 @@ RSpec.describe "Api::V1::Sleeps", type: :request do
       it "睡眠時間が計算される" do
         expect { subject }.to change { CalculatedTime.count }.by(1)
         calculated_time = current_user.calculated_times.first
-        calculated_time.sleep_time = current_user.sleep.actual_wake - current_user.sleep.bedtime
-        calculated_time.diff_time = current_user.sleep.actual_wake - current_user.sleep.target_wake
+        expect(calculated_time.created_at.strftime("%d")).to eq "07"
+        expect(calculated_time.sleep_time).to eq 600
+        expect(calculated_time.diff_time).to eq 120
       end
     end
   end

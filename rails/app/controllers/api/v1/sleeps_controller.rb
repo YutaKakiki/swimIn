@@ -16,12 +16,7 @@ class Api::V1::SleepsController < ApplicationController
   def create
     user = User.find_by(id: params[:user_id])
     sleep = user.build_sleep(sleep_params)
-    # 寝た時間が、午前０時〜正午であれば、日付を昨日にする。（人間の感覚で）
-    if DateTime.now.strftime("%H:%M:%S").between?(Time.zone.parse("00:00:00"), Time.zone.parse("12:00:00"))
-      sleep.update!(state: "sleep", bedtime:DateTime.now.yesterday)
-    else
-      sleep.update!(state: "sleep", bedtime: DateTime.now)
-    end
+    sleep.update!(state: "sleep", bedtime: DateTime.now)
 
     if sleep.save
       render json: sleep, serializer: SleepSerializer, status: :ok
@@ -36,7 +31,6 @@ class Api::V1::SleepsController < ApplicationController
     actual_wake = Time.zone.parse(params[:sleep][:actual_wake])
     sleep.update!(state: "wake", actual_wake: params[:sleep][:actual_wake], comment: params[:sleep][:comment])
     user.calculate_time(actual_wake)
-
     start_data = Time.current.ago(1.month).beginning_of_month
     end_data = Time.current.ago(1.month).end_of_month
     last_month_data = current_api_v1_user.calculated_times.where(created_at: start_data..end_data)

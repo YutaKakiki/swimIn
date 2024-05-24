@@ -18,8 +18,14 @@ rm -f /myapp/tmp/pids/server.pid
 # echo "bundle exec rails db:create RAILS_ENV=production"
 # bundle exec rails db:create RAILS_ENV=production
 
+# Reset the calculated_time table
+echo "Resetting calculated_time table"
+bundle exec rails runner "CalculatedTime.delete_all"
+
 echo "bundle exec rails db:migrate RAILS_ENV=production"
 bundle exec rails db:migrate RAILS_ENV=production
+
+
 
 echo "exec pumactl start"
 bundle exec pumactl start

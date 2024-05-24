@@ -1,4 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import LogoutIcon from '@mui/icons-material/Logout'
 import ModeNightIcon from '@mui/icons-material/ModeNight'
@@ -16,12 +17,18 @@ import { useSleepState, useUserState } from '../../hooks/useGrobalState'
 import { CurrentUserProf } from './CurrentUserProf'
 import EditForm from './EditForm'
 
-const ModalContent = () => {
+type PropsType = {
+  setOpen: (value: boolean) => void
+}
+const ModalContent: React.FC<PropsType> = ({ setOpen }) => {
   const [user] = useUserState()
   const [sleep] = useSleepState()
   const [openEdit, setOpenEdit] = useState(false)
   const handleClick = () => {
     setOpenEdit(true)
+  }
+  const handleClose = () => {
+    setOpen(false)
   }
 
   return (
@@ -39,6 +46,11 @@ const ModalContent = () => {
           >
             {!openEdit && (
               <>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <IconButton onClick={handleClose} sx={{ textAlign: 'right' }}>
+                    <HighlightOffIcon fontSize="medium" />
+                  </IconButton>
+                </Box>
                 <Box
                   sx={{
                     position: 'absolute',

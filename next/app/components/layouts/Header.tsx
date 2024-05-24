@@ -112,7 +112,7 @@ export const Header = () => {
       </AppBar>
       {user.isSignIn && (
         <Modal open={open} onClose={handleClose} sx={{ top: '15%' }}>
-          <ModalContent />
+          <ModalContent setOpen={setOpen} />
         </Modal>
       )}
     </>

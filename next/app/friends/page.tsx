@@ -11,7 +11,6 @@ import NotificationImportantIcon from '@mui/icons-material/NotificationImportant
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
 import PersonSearchIcon from '@mui/icons-material/PersonSearch'
 import UpdateDisabledIcon from '@mui/icons-material/UpdateDisabled'
-
 import {
   Avatar,
   Box,
@@ -30,7 +29,7 @@ import camelcaseKeys from 'camelcase-keys'
 import dayjs, { Dayjs, extend } from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 extend(duration)
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
 import Followers from '../components/friends/Followers'
 import Friends from '../components/friends/Friends'
@@ -141,6 +140,14 @@ const FriendsPage = () => {
   const handleFollowerClose = () => {
     setFollowerOpen(false)
   }
+  // 自分を追加している友達がどれほどいるか？
+  const followerUrl = process.env.NEXT_PUBLIC_API_BASE_URL + '/users/followers'
+  const { data: followers } = useSWR(followerUrl, fetcher)
+  const followerCount = followers && followers.length
+  const { mutate: revalidate } = useSWRConfig()
+  useEffect(() => {
+    revalidate(followerUrl)
+  })
   return (
     <>
       {show && (
@@ -155,13 +162,30 @@ const FriendsPage = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <Box>
+                  <Box sx={{ mt: '23px' }}>
                     <Button
                       variant="outlined"
                       onClick={handleFollowerOpen}
-                      sx={{ p: 1 }}
+                      sx={{ p: 1, mt: '-25px', display: 'flex' }}
                     >
                       <GroupAddIcon fontSize="large" />
+                      {!(followerCount == 0) && (
+                        <Typography
+                          sx={{
+                            fontSize: '14px',
+                            border: '1px',
+                            width: '20px',
+                            borderRadius: '50%',
+                            bgcolor: 'red',
+                            ml: '3px',
+                            mt: '-9px',
+                            color: 'white',
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {followerCount}
+                        </Typography>
+                      )}
                     </Button>
                   </Box>
                   <Box>
