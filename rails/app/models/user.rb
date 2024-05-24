@@ -38,9 +38,23 @@ class User < ApplicationRecord
     last_time = self.calculated_times.last
     is_between_midnight_and_noon = sleep.created_at.strftime("%H:%M").between?("00:00", "11:59")
     if last_time.nil?
-      is_between_midnight_and_noon ? self.calculated_times.create!(sleep_time:, diff_time:,created_at: Date.yesterday ,updated_at:Date.yesterday) : self.calculated_times.create!(sleep_time:, diff_time:)
+      if is_between_midnight_and_noon
+        self.calculated_times.create!(sleep_time:, diff_time:, created_at: Date.yesterday,
+                                      updated_at: Date.yesterday)
+      else
+        self.calculated_times.create!(
+          sleep_time:, diff_time:,
+        )
+      end
     else
-      is_between_midnight_and_noon ? last_time.update!(sleep_time:, diff_time:,created_at: Date.yesterday ,updated_at:Date.yesterday) : last_time.update!(sleep_time:, diff_time:)
+      if is_between_midnight_and_noon
+        last_time.update!(sleep_time:, diff_time:, created_at: Date.yesterday,
+                          updated_at: Date.yesterday)
+      else
+        last_time.update!(
+          sleep_time:, diff_time:,
+        )
+      end
     end
   end
 end
