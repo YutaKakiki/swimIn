@@ -2,6 +2,7 @@ import HelpIcon from '@mui/icons-material/Help'
 import {
   Box,
   Card,
+  CardContent,
   IconButton,
   Modal,
   ToggleButton,
@@ -226,26 +227,12 @@ const SleepStatistics = () => {
             >
               あなたの睡眠履歴
             </Typography>
-            <Typography
-              sx={{ textAlign: 'center', fontSize: '13px', mt: '50px' }}
-            >
-              打刻履歴から算出されたデータがここに描画されます
-            </Typography>
-            <Typography
-              sx={{ textAlign: 'center', fontSize: '13px', mt: '50px' }}
-            >
-              初回の「おやすみ」＆「おはよう」を打刻以後、
-            </Typography>
-            <Typography
-              sx={{ textAlign: 'center', fontSize: '13px', mt: '10px' }}
-            >
-              このデータは閲覧可能になります
-            </Typography>
-            <Typography
-              sx={{ textAlign: 'center', fontSize: '13px', mt: '50px' }}
-            >
-              SwimInで睡眠を管理していく習慣をつけましょう!
-            </Typography>
+            <Card sx={{ p: 0.5, backgroundColor: '#a1b3d1', m: 2, mt: 6 }}>
+              <CardContent sx={{ lineHeight: 2, fontWeight: 'bold' }}>
+                睡眠時間が登録されると、この機能はご利用になれます。
+                今夜、「おやすみ」の打刻をしましょう。次回の「おはよう」の打刻で睡眠時間は登録されます
+              </CardContent>
+            </Card>
           </>
         )}
       </Card>

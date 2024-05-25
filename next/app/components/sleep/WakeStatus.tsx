@@ -8,6 +8,7 @@ import { useSleepState } from '@/app/hooks/useGrobalState'
 
 const WakeStatus = () => {
   const [sleep] = useSleepState()
+  console.log(sleep)
   const formattedActualWake = dayjs(sleep.actualWake).format('HH:mm')
   const sleepTime = dayjs(sleep.actualWake).diff(sleep.bedtime, 'minute')
   const formattedSleepTime = dayjs
