@@ -223,7 +223,16 @@ const SleepStatistics = () => {
             <Typography
               textAlign={'center'}
               fontWeight={'bold'}
-              sx={{ mt: '3px' }}
+              sx={{
+                m: '0 auto',
+                mt: '15px',
+                border: '1px',
+                borderRadius: '20px',
+                bgcolor: '#001e43',
+                width: '170px',
+                color: 'white',
+                p: '1px',
+              }}
             >
               あなたの睡眠履歴
             </Typography>
