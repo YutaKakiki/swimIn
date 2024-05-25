@@ -204,7 +204,7 @@ const SleepStatistics = () => {
                         width: '100px',
                       }}
                     >
-                      週平均
+                      月平均
                     </Typography>
                     <Typography
                       sx={{
