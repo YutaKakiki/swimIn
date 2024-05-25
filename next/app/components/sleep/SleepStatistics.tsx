@@ -102,27 +102,35 @@ const SleepStatistics = () => {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
+                  border: '1.5px solid',
+                  borderColor: '#001e43',
+                  borderRadius: '20px',
+                  width: '180px',
+                  m: '0 auto',
+                  mt: '10px',
                 }}
               >
-                <Typography
-                  textAlign={'center'}
-                  fontWeight={'bold'}
-                  sx={{ mt: '3px' }}
-                >
-                  あなたの睡眠履歴
-                </Typography>
+                <Box>
+                  <Typography
+                    textAlign={'center'}
+                    fontWeight={'bold'}
+                    color={'#001e43'}
+                    sx={{ pl: '12px' }}
+                  >
+                    あなたの睡眠履歴
+                  </Typography>
+                </Box>
                 <IconButton onClick={handleClick}>
                   <HelpIcon
                     sx={{
                       color: '#a9a9a9',
-                      ml: '1px',
-                      mt: '1px',
                       fontSize: '22px',
+                      mt: '-3px',
                     }}
                   />
                 </IconButton>
               </Box>
-              <Box>
+              <Box sx={{ mt: '10px' }}>
                 <ToggleButtonGroup
                   value={display}
                   onChange={handleChange}
@@ -145,7 +153,7 @@ const SleepStatistics = () => {
                 </ToggleButtonGroup>
               </Box>
             </Box>
-            <Box sx={{ mt: '5px' }}>
+            <Box sx={{ mt: '-5px' }}>
               {display == 'week' && (
                 <>
                   <Box sx={{ ml: '10px' }}>
@@ -220,22 +228,39 @@ const SleepStatistics = () => {
         )}
         {!data && (
           <>
-            <Typography
-              textAlign={'center'}
-              fontWeight={'bold'}
+            <Box
               sx={{
-                m: '0 auto',
-                mt: '15px',
-                border: '1px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: '1px solid',
+                borderColor: '#001e43',
                 borderRadius: '20px',
-                bgcolor: '#001e43',
-                width: '170px',
-                color: 'white',
-                p: '1px',
+                width: '180px',
+                m: '0 auto',
+                mt: '10px',
               }}
             >
-              あなたの睡眠履歴
-            </Typography>
+              <Box>
+                <Typography
+                  textAlign={'center'}
+                  fontWeight={'bold'}
+                  color={'#001e43'}
+                  sx={{ pl: '12px' }}
+                >
+                  あなたの睡眠履歴
+                </Typography>
+              </Box>
+              <IconButton onClick={handleClick}>
+                <HelpIcon
+                  sx={{
+                    color: '#a9a9a9',
+                    fontSize: '22px',
+                    mt: '-3px',
+                  }}
+                />
+              </IconButton>
+            </Box>
             <Card sx={{ p: 0.5, backgroundColor: '#a1b3d1', m: 2, mt: 6 }}>
               <CardContent sx={{ lineHeight: 2, fontWeight: 'bold' }}>
                 睡眠時間が登録されると、この機能はご利用になれます。
