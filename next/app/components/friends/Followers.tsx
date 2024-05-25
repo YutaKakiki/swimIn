@@ -1,4 +1,15 @@
-import { Avatar, Box, Button, Card, Divider, Typography } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  Divider,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+} from '@mui/material'
 import axios from 'axios'
 import React, { Dispatch, SetStateAction } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
@@ -45,10 +56,11 @@ const Followers: React.FC<PropsType> = ({ close }) => {
             height: { xs: '300px' },
             margin: '0 auto',
             position: 'relative',
+            overflow: 'auto',
           }}
         >
           {data && (
-            <Box>
+            <Box sx={{}}>
               <Typography
                 textAlign={'center'}
                 fontSize={'16px'}
@@ -64,67 +76,94 @@ const Followers: React.FC<PropsType> = ({ close }) => {
               >
                 友達に追加されています！
               </Typography>
-              <Box sx={{ p: 2, overflow: 'auto' }}>
-                {data.map((follower: FriendsType) => (
-                  <>
-                    <>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          mt: '20px',
-                        }}
-                      >
-                        <Avatar sx={{ height: '33px', width: '33px' }}>
-                          <FriendsProf
-                            height={33}
-                            width={33}
-                            otherUser={follower}
+              <Box>
+                <List>
+                  <Box sx={{ p: 2 }}>
+                    {data.map((follower: FriendsType) => (
+                      <>
+                        <>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              mt: '20px',
+                            }}
+                          >
+                            <ListItem>
+                              <ListItemAvatar>
+                                <Avatar sx={{ height: '33px', width: '33px' }}>
+                                  <FriendsProf
+                                    height={33}
+                                    width={33}
+                                    otherUser={follower}
+                                  />
+                                </Avatar>
+                              </ListItemAvatar>
+                              <ListItemText
+                                primary={
+                                  <>
+                                    <Typography
+                                      fontSize={'20px'}
+                                      sx={{ ml: '-14px', width: '120px' }}
+                                      fontWeight={'bold'}
+                                    >
+                                      {follower.name}
+                                    </Typography>
+                                  </>
+                                }
+                              ></ListItemText>
+                              <ListItemText
+                                primary={
+                                  <>
+                                    <Box
+                                      sx={{
+                                        display: 'flex',
+                                        justifyContent: 'flex-end',
+                                      }}
+                                    >
+                                      <Button
+                                        onClick={() => {
+                                          handleFollow(follower)
+                                        }}
+                                        sx={{ ml: '10px', width: '60px' }}
+                                        variant="outlined"
+                                      >
+                                        追加
+                                      </Button>
+                                    </Box>
+                                  </>
+                                }
+                              ></ListItemText>
+                            </ListItem>
+                          </Box>
+                          <Divider
+                            sx={{
+                              width: '230px',
+                              flex: 'display',
+                              m: '0 auto',
+                              mt: '5px',
+                            }}
                           />
-                        </Avatar>
+                        </>
+                      </>
+                    ))}
+                    {data.length == 0 && (
+                      <Box sx={{ display: 'flex' }}>
                         <Typography
-                          fontSize={'20px'}
-                          sx={{ ml: '10px' }}
-                          fontWeight={'bold'}
-                        >
-                          {follower.name}
-                        </Typography>
-                        <Button
-                          onClick={() => {
-                            handleFollow(follower)
+                          textAlign={'center'}
+                          fontSize={15}
+                          sx={{
+                            m: '0 auto',
+                            mt: '20px',
                           }}
-                          sx={{ ml: '15px', width: '50px' }}
-                          variant="outlined"
                         >
-                          追加
-                        </Button>
+                          あなたを追加している友達はいません
+                        </Typography>
                       </Box>
-                      <Divider
-                        sx={{
-                          width: '230px',
-                          flex: 'display',
-                          m: '0 auto',
-                          mt: '5px',
-                        }}
-                      />
-                    </>
-                  </>
-                ))}
-                {data.length == 0 && (
-                  <Box sx={{ display: 'flex' }}>
-                    <Typography
-                      textAlign={'center'}
-                      fontSize={15}
-                      sx={{
-                        m: '0 auto',
-                        mt: '20px',
-                      }}
-                    >
-                      あなたを追加している友達はいません
-                    </Typography>
+                    )}
                   </Box>
-                )}
+                </List>
               </Box>
             </Box>
           )}
