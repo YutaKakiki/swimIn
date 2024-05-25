@@ -33,7 +33,6 @@ import React, { useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
 
 import Followers from '../components/friends/Followers'
-
 import Friends from '../components/friends/Friends'
 import { FriendsProf } from '../components/friends/FriendsProf'
 import ListedCurrentUser from '../components/friends/ListedCurrentUser'
