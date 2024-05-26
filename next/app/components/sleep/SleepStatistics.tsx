@@ -47,7 +47,6 @@ const SleepStatistics = () => {
     dayjs
       .duration(weeklyCamelcaseData.sleepTimesAverage, 'minute')
       .format('HH時間mm分')
-  console.log(weeklyCamelcaseData)
   const monthlySleepAverage =
     monthlyCamelcaseData &&
     dayjs
@@ -65,7 +64,7 @@ const SleepStatistics = () => {
   const monthlySleepTimeArr =
     monthlyCamelcaseData &&
     monthlyCamelcaseData.sleepTimes.map((time: number) => time / 60)
-  console.log(monthlySleepTimeArr)
+
   const monthlyDiffTimeArr =
     monthlyCamelcaseData &&
     monthlyCamelcaseData.diffTimes.map((time: number) => time / 60)

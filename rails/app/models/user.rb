@@ -35,9 +35,12 @@ class User < ApplicationRecord
     target_wake = sleep.target_wake
     sleep_time = (actual_wake - bedtime).to_i / 60
     diff_time = (actual_wake - target_wake).to_i / 60
-    last_time = self.calculated_times.last
+    last_record = self.calculated_times.last
     is_between_midnight_and_noon = sleep.created_at.strftime("%H:%M").between?("00:00", "11:59")
-    if last_time.nil?
+    # 初回の打刻時と、睡眠時間の記録の最後が一昨日のものだった場合、（昨日の日時の）レコードを作成
+    # そうでなければ、最後のレコードを更新
+    if !last_record || last_record.created_at == Time.zone.today.ago(2.days)
+      # 日付を回ってから就寝した場合は、睡眠記録を昨日のものとする。
       if is_between_midnight_and_noon
         self.calculated_times.create!(sleep_time:, diff_time:, created_at: Date.yesterday,
                                       updated_at: Date.yesterday)
@@ -48,10 +51,10 @@ class User < ApplicationRecord
       end
     else
       if is_between_midnight_and_noon
-        last_time.update!(sleep_time:, diff_time:, created_at: Date.yesterday,
-                          updated_at: Date.yesterday)
+        last_record.update!(sleep_time:, diff_time:, created_at: Date.yesterday,
+                            updated_at: Date.yesterday)
       else
-        last_time.update!(
+        last_record.update!(
           sleep_time:, diff_time:,
         )
       end

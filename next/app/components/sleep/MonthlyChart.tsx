@@ -83,7 +83,7 @@ const MonthlyChart: React.FC<PropsType> = ({ sleepTimeArr, diffTimeArr }) => {
               if (context.parsed.y) {
                 label = dayjs
                   .duration(context.parsed.y * 60, 'minute')
-                  .format('HH:mm')
+                  .format('HH時間mm分')
               }
             } else if (context.datasetIndex === 1) {
               //目標時刻との差

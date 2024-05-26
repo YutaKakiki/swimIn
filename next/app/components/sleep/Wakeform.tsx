@@ -145,7 +145,7 @@ const WakeForm: React.FC<PropsTypes> = ({ zoom, setHide, setZoom }) => {
                 </Typography>
                 <TextareaAutosize
                   style={{ width: '200px', height: '100px', marginTop: '10px' }}
-                  placeholder="コメントを入力"
+                  placeholder="今日はどんな1日ですか？"
                   onChange={changeComment}
                 />
               </Box>
