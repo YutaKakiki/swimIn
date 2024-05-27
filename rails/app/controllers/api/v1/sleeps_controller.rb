@@ -101,7 +101,7 @@ class Api::V1::SleepsController < ApplicationController
 
   def forget_stamp_process
     last_data = current_api_v1_user.calculated_times.last
-    return if last_data.nil?
+    return if last_data.created_at == Time.zone.today
 
     while last_data.created_at < Time.zone.today
       last_data = current_api_v1_user.calculated_times.create!(sleep_time: 0, diff_time: 0, created_at: last_data.created_at + 1,

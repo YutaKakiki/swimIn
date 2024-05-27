@@ -39,7 +39,7 @@ class User < ApplicationRecord
     is_between_midnight_and_noon = sleep.created_at.strftime("%H:%M").between?("00:00", "11:59")
     # 初回の打刻時と、睡眠時間の記録の最後が一昨日のものだった場合、（昨日の日時の）レコードを作成
     # そうでなければ、最後のレコードを更新
-    if !last_record || last_record.created_at == Time.zone.today.ago(2.days)
+    if !last_record || !last_record.created_at == Time.zone.today
       # 日付を回ってから就寝した場合は、睡眠記録を昨日のものとする。
       if is_between_midnight_and_noon
         self.calculated_times.create!(sleep_time:, diff_time:, created_at: Date.yesterday,

@@ -40,8 +40,8 @@ const WeeklyChart: React.FC<PropsType> = ({ sleepTimeArr, diffTimeArr }) => {
   while (sleepTimeArr.length < 7) {
     sleepTimeArr.unshift(0)
     diffTimeArr.unshift(0)
+    console.log(sleepTimeArr)
   }
-
   // 過去７日間の睡眠データ
   const reverseLabels: string[] = []
   for (let i: number = 0; i < 7; i++) {
