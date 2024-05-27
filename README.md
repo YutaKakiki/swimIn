@@ -57,7 +57,7 @@
 
 |睡眠履歴閲覧||
 |----|----|
-|機能説明モーダル|平均睡眠時間　・　グラフ|
+|機能説明モーダル|平均睡眠時間/グラフ|
 |<a href="https://gyazo.com/4caeb5885e72b815e22445219b72ba8e"><img src="https://i.gyazo.com/4caeb5885e72b815e22445219b72ba8e.gif" alt="Image from Gyazo" width="205"/></a>|<a href="https://gyazo.com/b0d392036502025265d38bcbe5ab58c4"><img src="https://i.gyazo.com/b0d392036502025265d38bcbe5ab58c4.gif" alt="Image from Gyazo" width="210"/></a>|
 |・グラフの読み方などを説明|・週 / 月単位の切り替え <br> ・平均睡眠時間 <br> ・グラフ表示　<br>　・睡眠時間（棒グラフ）　<br>　・目標起床時刻との差<br/>　　(折れ線グラフ)|
 
